@@ -79,7 +79,7 @@
   margin-left: -160px !important;
   display: block !important;
   width: fit-content !important;
-  margin-top: 75px !important;
+  margin-top: 80px !important;
   margin-bottom: 0.8em !important;
   border-bottom: none !important;
   border-radius: 0;
@@ -148,7 +148,7 @@
 .reveal::before {
   content: "";
   position: absolute;
-  top: 48px;
+  top: 30px;
   left: 0;
   right: 0;
   height: 2px;
@@ -549,22 +549,21 @@
    LOGO EN HEADER (Montado sobre la línea roja a la izquierda)
    ══════════════════════════════════════════════════════════════ */
 .reveal .slide-logo {
-  /* Recuadro blanco montado sobre la línea roja (línea en top: 48px).
-     El logo la "corta" con su fondo blanco. Bajarlo un poco (top: 26px)
-     lo separa del borde superior sin que llegue a la banda del título.
-     Para reubicarlo verticalmente, mueve solo 'top'. */
-  height: 58px !important;
+  /* Recuadro blanco montado sobre la línea roja (línea en top: 30px).
+     El logo la "corta" con su fondo blanco.
+     Posicionado más arriba y compacto para no invadir la banda del título. */
+  height: 44px !important;
   width: auto !important;
   max-width: unset !important;
   max-height: unset !important;
   position: fixed !important;
-  top: 40px !important;
+  top: 24px !important;
   left: 60px !important;
   right: auto !important;
   bottom: auto !important;
   z-index: 30;
   background: #ffffff;
-  padding: 0 22px;
+  padding: 0 18px;
   box-sizing: content-box;
   border-radius: 0 !important;
   box-shadow: none !important;

@@ -182,14 +182,15 @@ format:
           word-break: break-all;
         }
         .reveal a.repo-link:hover { background: var(--unl-rojo); color: #fff; border-color: var(--unl-rojo); }
-        /* Columna compacta: texto más pequeño para que quepa el QR + enlace */
-        .reveal .compacto li { font-size: 0.72em; line-height: 1.3; margin-bottom: 0.35em; }
+        /* Columna compacta: mantiene el tamaño de letra uniforme (0.85em);
+           solo ajusta el interlineado y el margen para ganar densidad. */
+        .reveal .compacto li { line-height: 1.4; margin-bottom: 0.4em; }
         .reveal .compacto .qr-box { margin-top: 10px; padding: 8px 12px; }
         .reveal .compacto .qr-box img { width: 92px !important; height: 92px !important; }
         .reveal .compacto .qr-box .qr-txt { font-size: 0.44em; }
         /* Conceptos en una sola columna (cuando acompañan a una figura) */
         .concept-col { display: flex; flex-direction: column; gap: 12px; }
-        .concept-col .concept-card { font-size: 0.55em; padding: 11px 16px; }
+        .concept-col .concept-card { font-size: 0.62em; padding: 10px 16px; }
         /* Viñeta/numeral en la misma línea que el texto */
         .reveal .slides li > p { display: inline; margin: 0; }
 
@@ -546,20 +547,18 @@ curl -sfL https://get.k3s.io | \
 
 <!-- ─── 9 · RESULTADOS OBJ 1 — FUNCIONANDO ─── -->
 
-## Resultado — Clúster funcionando {data-menu-title="Objetivo 1 · Funcionando"}
+## Resultado — Clúster operativo {data-menu-title="Objetivo 1 · Funcionando"}
 
 ::: {.columnas}
 ::: {.col-txt}
 
-- Los **4 nodos activos** y el servidor web repartido en los trabajadores
-- **Ningún fallo** en las 21 ejecuciones
+- Los **4 nodos activos** y reconocidos por Kubernetes (K3s)
+- **Ningún fallo** de nodo en las 21 ejecuciones → un entorno **estable y determinista**
 
 :::
-::: {.col-fig .stack}
+::: {.col-fig}
 
-![Los cuatro nodos activos](assets/getNode-O-Wide.png)
-
-![Una copia del servidor web en cada trabajador](assets/getPods-O-Wide.png)
+![Los cuatro nodos activos (kubectl get nodes)](assets/getNode-O-Wide.png)
 
 :::
 :::
@@ -611,6 +610,25 @@ Si repartir **mejora mucho** → el problema era la concentración en el maestro
 
 Si **no mejora** → el problema está en la **red de los trabajadores**.
 :::
+
+:::
+:::
+
+
+<!-- ─── RESULTADOS OBJ 2 — DESPLIEGUE NGINX ─── -->
+
+## Resultado — Despliegue de la aplicación web {data-menu-title="Objetivo 2 · Despliegue"}
+
+::: {.columnas}
+::: {.col-txt}
+
+- Se desplegó el servidor web **NGINX con 3 réplicas**, repartidas por Kubernetes en los **3 nodos trabajadores**.
+- Confirma que **K3s orquesta** correctamente sobre hardware embebido, incluso en nodos de solo **1 GB de RAM**.
+
+:::
+::: {.col-fig}
+
+![Una réplica de NGINX en cada trabajador (kubectl get pods -o wide)](assets/getPods-O-Wide.png)
 
 :::
 :::
@@ -696,7 +714,7 @@ Ni el procesador ni la red están saturados: el problema **no es la potencia, si
 - Desde la PC de pruebas se **repartió la carga** directamente entre los 3 trabajadores, en vez de enviarla toda al maestro.
 
 ::: {.caja-importante}
-**No era la concentración en el maestro:** el throughput casi no cambió y la respuesta se volvió **más irregular**. Cada trabajador recibe el tráfico por su **propia conexión (puerto USB)**, igual de limitada.
+**No era la concentración en el maestro:** el throughput apenas subió (**3.4 %**) y la respuesta se volvió **más irregular**. Cada trabajador recibe el tráfico por su **propia conexión (puerto USB)**, igual de limitada.
 :::
 
 :::
@@ -809,18 +827,15 @@ El **freno por calor solo aparece con tareas que exigen mucho al procesador**. U
 
 **Objetivo general — cumplido**
 
-- Se concluye que **quedó medido el nivel de latencia y throughput** del clúster: las 21 ejecuciones fueron **consistentes** y suficientes para responder la pregunta de investigación.
-- El estudio no solo midió el rendimiento, sino que además **determinó el factor que lo condiciona**.
+- Quedó **medido el nivel de latencia y throughput** del clúster (21 ejecuciones consistentes) y, además, el estudio **determinó el factor que lo condiciona**.
 
 **Objetivo específico 1 — cumplido**
 
-- Se concluye que **el prototipo físico es estable y funcional**: operó **sin un solo fallo** en las 21 ejecuciones, quedando listo para la orquestación.
-- El resultado es además **ampliable y reproducible** (diseño en 3D público).
+- El **prototipo físico resultó estable, funcional y reproducible**: operó sin un solo fallo en las 21 ejecuciones, quedando listo para la orquestación.
 
 **Objetivo específico 2 — cumplido**
 
-- Se concluye que **el despliegue web con Kubernetes fue exitoso** y que las métricas de latencia y throughput quedaron **registradas bajo carga**.
-- El análisis permitió, además, **explicar por qué el sistema rinde así** y qué lo limita.
+- El **despliegue web con Kubernetes fue exitoso**, con las métricas registradas bajo carga, y el análisis **explicó qué limita el rendimiento**.
 
 
 <!-- ─── 23 · RECOMENDACIONES TÉCNICAS ─── -->
