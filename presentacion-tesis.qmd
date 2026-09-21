@@ -9,6 +9,12 @@
 format:
   revealjs:
     theme: [default, css/unl-theme.css]
+    css: css/tuberia.css
+    embed-resources: true
+    html-math-method: plain
+    include-after-body:
+      text: |
+        <script src="js/tuberia.js"></script>
     logo: assets/logoUnlOscuro.png
     slide-number: true
     transition: fade
@@ -344,37 +350,62 @@ format:
 
 ## Problemática y Pregunta {data-menu-title="Problemática"}
 
-<div class="diagrama-problema">
+```{=html}
+<div class="diagrama-problema ilustrado">
 
 <div class="dp-caja fragment" data-fragment-index="1">
+<svg class="dp-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <path d="M58 104 H150 C174 104 186 88 186 72 C186 54 172 42 156 42 C152 22 134 10 114 10 C92 10 76 24 72 42 C50 40 30 52 30 74 C30 92 42 104 58 104 Z" fill="none" stroke="#1B2A4A" stroke-width="7" stroke-linejoin="round"/>
+  <text x="108" y="88" font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="56" fill="#E30613" text-anchor="middle">$</text>
+</svg>
 <span class="dp-titulo">Contexto</span>
-Depender de la nube comercial y de servidores tradicionales es una <b>barrera de costo</b> para universidades y entornos con pocos recursos.
+La nube comercial y los servidores tradicionales son una <b>barrera de costo</b> para la academia.
 </div>
 
 <div class="dp-centro">
+<span class="dp-signo">?</span>
 <span class="dp-titulo-centro">Pregunta de investigación</span>
-¿Cuál es el <strong>tiempo de respuesta</strong> y la <strong>cantidad de peticiones por segundo</strong> de un clúster con <strong>Kubernetes</strong> para aplicaciones web, al someterlo a una <strong>carga</strong> en una arquitectura de <strong>bajo costo</strong>?
+<span class="dp-texto">¿Cuál es el nivel de <strong>latencia</strong> y <strong>throughput</strong> que presenta un clúster orquestado con <strong>Kubernetes</strong> para el despliegue de aplicaciones web contenerizadas, al someterse a una <strong>simulación de carga</strong> en una arquitectura de <strong>bajo costo</strong>?</span>
 </div>
 
 <div class="dp-caja fragment" data-fragment-index="2">
+<svg class="dp-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <path d="M18 26 H98 V84 H78 V98 H38 V84 H18 Z" fill="#1B2A4A"/>
+  <g stroke="#ffffff" stroke-width="5" stroke-linecap="round"><path d="M32 38 V58 M45 38 V58 M58 38 V58 M71 38 V58 M84 38 V58"/></g>
+  <path d="M106 62 H128 M120 52 L130 62 L120 72" fill="none" stroke="#9AA1AD" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="138" y="40" width="52" height="44" rx="8" fill="#E30613"/>
+  <text x="164" y="69" font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="17" fill="#fff" text-anchor="middle">USB</text>
+</svg>
 <span class="dp-titulo">Limitación</span>
-Equipos de poca capacidad, sobre todo en <b>red</b>: en la Raspberry Pi 3 la red pasa por el <b>puerto USB</b>.
+Hardware de recursos limitados, sobre todo en <b>red</b>: en la Raspberry Pi 3 el Ethernet pasa por el <b>bus USB</b>.
 </div>
 
 <div class="dp-caja fragment" data-fragment-index="3">
+<svg class="dp-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <g fill="#E30613"><rect x="40" y="8" width="120" height="22" rx="6"/></g>
+  <g fill="#1B2A4A"><rect x="40" y="38" width="120" height="22" rx="6"/><rect x="40" y="68" width="120" height="22" rx="6"/><rect x="40" y="98" width="120" height="22" rx="6"/></g>
+  <g fill="#ffffff"><circle cx="54" cy="19" r="4"/><circle cx="54" cy="49" r="4"/><circle cx="54" cy="79" r="4"/><circle cx="54" cy="109" r="4"/></g>
+  <g stroke="#ffffff" stroke-width="4" stroke-linecap="round"><path d="M70 19 H146 M70 49 H146 M70 79 H146 M70 109 H146"/></g>
+</svg>
 <span class="dp-titulo">Alternativa</span>
-Un <b>clúster de Raspberry Pi</b> con una versión ligera de Kubernetes: económico y reproducible.
+<b>Clúster de Raspberry Pi</b> con Kubernetes ligero (K3s): económico y reproducible.
 </div>
 
 <div class="dp-caja fragment" data-fragment-index="4">
+<svg class="dp-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <circle cx="88" cy="56" r="42" fill="none" stroke="#1B2A4A" stroke-width="8"/>
+  <path d="M120 88 L160 122" stroke="#1B2A4A" stroke-width="12" stroke-linecap="round"/>
+  <text x="88" y="76" font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="54" fill="#E30613" text-anchor="middle">?</text>
+</svg>
 <span class="dp-titulo">Vacío</span>
-Poca evidencia real de su <b>rendimiento bajo carga</b> y de <b>qué lo limita</b>.
+Poca evidencia de su <b>rendimiento bajo carga</b> y de <b>qué lo limita</b>.
 </div>
 
 </div>
+```
 
 
-<!-- ═══════════════ 3 · CONCEPTOS CLAVE ═══════════════ -->
+<!-- ═══════════════ CONCEPTOS CLAVE ═══════════════ -->
 
 ## Conceptos clave {data-menu-title="Conceptos clave"}
 
@@ -384,23 +415,23 @@ Poca evidencia real de su <b>rendimiento bajo carga</b> y de <b>qué lo limita</
 <div class="concept-col">
 
 <div class="concept-card">
-<b>Clúster</b> — varias computadoras que trabajan juntas como si fueran una sola.
+<b>Clúster</b> — varios equipos que operan como uno solo.
 </div>
 
 <div class="concept-card">
-<b>Kubernetes y K3s</b> — coordinan las aplicaciones; K3s es la versión ligera para equipos pequeños.
+<b>Kubernetes y K3s</b> — administra las aplicaciones (contenedores) en varios equipos; K3s es su versión ligera.
 </div>
 
 <div class="concept-card">
-<b>Maestro y trabajadores</b> — el maestro coordina; los trabajadores ejecutan las aplicaciones.
+<b>Maestro y trabajadores</b> — el maestro coordina; los trabajadores ejecutan.
 </div>
 
 <div class="concept-card">
-<b>Latencia y throughput</b> — el tiempo de respuesta y las peticiones por segundo: las métricas del estudio.
+<b>Latencia y throughput</b> — cuánto tarda cada respuesta y cuántas peticiones se atienden por segundo.
 </div>
 
 <div class="concept-card">
-<b>Freno por calor</b> — a 80–85 °C el equipo baja la velocidad del procesador para protegerse.
+<b>Thermal throttling</b> — a 80–85 °C el procesador reduce su frecuencia para protegerse.
 </div>
 
 </div>
@@ -414,7 +445,7 @@ Poca evidencia real de su <b>rendimiento bajo carga</b> y de <b>qué lo limita</
 :::
 
 
-<!-- ═══════════════ 4 · OBJETIVOS ═══════════════ -->
+<!-- ═══════════════ OBJETIVOS ═══════════════ -->
 
 ## Objetivos {data-menu-title="Objetivos"}
 
@@ -435,64 +466,171 @@ Medir el nivel de **latencia** y **throughput** que presenta un clúster orquest
 :::
 
 
-<!-- ═══════════════ 5 · SECCIÓN OBJETIVO 1 ═══════════════ -->
+<!-- ═══════════════ SECCIÓN OBJETIVO 1 ═══════════════ -->
 
 ## Objetivo 1 — Construcción del prototipo físico {.seccion data-state="portada" data-menu-title="► Objetivo 1"}
 
 <span class="numero-seccion">01</span>
 
 
-<!-- ─── 6 · METODOLOGÍA OBJ 1 — DISEÑO ─── -->
-
 ## Metodología — Diseño de la carcasa {data-menu-title="Objetivo 1 · Diseño"}
 
-::: {.columnas}
-::: {.col-fig}
+```{=html}
+<div class="dt-fases">
 
-![Método Design Thinking: 3 versiones hasta el diseño final](assets/fasesDesignThinking.png)
+<div class="dt-fase">
+<span class="dt-num">1</span>
+<svg class="dt-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <circle cx="70" cy="40" r="22" fill="#1B2A4A"/><path d="M30 118 C30 84 110 84 110 118 Z" fill="#1B2A4A"/>
+  <circle cx="134" cy="48" r="18" fill="#E30613"/><path d="M100 118 C100 90 168 90 168 118 Z" fill="#E30613"/>
+</svg>
+<span class="dt-tit">Empatizar</span>
+<span class="dt-txt">Cómputo local, asequible y reproducible</span>
+</div>
 
-:::
-::: {.col-fig}
+<div class="dt-fase">
+<span class="dt-num">2</span>
+<svg class="dt-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <circle cx="100" cy="66" r="54" fill="none" stroke="#1B2A4A" stroke-width="8"/>
+  <circle cx="100" cy="66" r="32" fill="none" stroke="#1B2A4A" stroke-width="8"/>
+  <circle cx="100" cy="66" r="12" fill="#E30613"/>
+  <path d="M100 66 L160 14" stroke="#E30613" stroke-width="7" stroke-linecap="round"/>
+  <path d="M160 14 l-4 20 M160 14 l-20 4" stroke="#E30613" stroke-width="7" stroke-linecap="round"/>
+</svg>
+<span class="dt-tit">Definir</span>
+<span class="dt-txt">El reto: una carcasa a medida</span>
+</div>
 
-![Diseño en 3D de la carcasa (con enfriamiento y red integrada)](assets/disenoTinkercad.png)
+<div class="dt-fase">
+<span class="dt-num">3</span>
+<svg class="dt-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <path d="M100 10 C68 10 50 34 50 56 C50 76 64 84 72 98 H128 C136 84 150 76 150 56 C150 34 132 10 100 10 Z" fill="#E30613"/>
+  <rect x="76" y="104" width="48" height="10" rx="5" fill="#1B2A4A"/><rect x="84" y="118" width="32" height="8" rx="4" fill="#1B2A4A"/>
+  <path d="M88 96 V66 L100 78 L112 66 V96" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+<span class="dt-tit">Idear</span>
+<span class="dt-txt">Modelado 3D en TinkerCAD</span>
+</div>
 
-:::
-:::
+<div class="dt-fase">
+<span class="dt-num">4</span>
+<svg class="dt-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <path d="M30 12 H170 V118 H150 V32 H50 V118 H30 Z" fill="#1B2A4A"/>
+  <rect x="84" y="32" width="32" height="18" rx="3" fill="#5B6068"/><path d="M94 50 H106 L100 62 Z" fill="#5B6068"/>
+  <g fill="#E30613"><rect x="66" y="104" width="68" height="12" rx="3"/><rect x="70" y="90" width="60" height="12" rx="3"/><rect x="74" y="76" width="52" height="12" rx="3"/></g>
+</svg>
+<span class="dt-tit">Prototipar</span>
+<span class="dt-txt">Impresión 3D en PLA · 8 piezas</span>
+</div>
 
+<div class="dt-fase">
+<span class="dt-num">5</span>
+<svg class="dt-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <rect x="46" y="18" width="108" height="106" rx="12" fill="none" stroke="#1B2A4A" stroke-width="8"/>
+  <rect x="76" y="6" width="48" height="24" rx="8" fill="#1B2A4A"/>
+  <g fill="none" stroke="#E30613" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M64 58 l8 8 l14 -16 M64 94 l8 8 l14 -16"/></g>
+  <g stroke="#9AA1AD" stroke-width="7" stroke-linecap="round"><path d="M100 60 H136 M100 96 H136"/></g>
+</svg>
+<span class="dt-tit">Evaluar</span>
+<span class="dt-txt">Ajuste frente a los requisitos</span>
+</div>
 
-<!-- ─── 7 · METODOLOGÍA OBJ 1 — EQUIPOS Y RED ─── -->
+</div>
+
+<svg class="dt-bucle" viewBox="0 0 1280 56" aria-hidden="true">
+  <path class="dt-bucle-trazo" pathLength="1" d="M1162 2 V26 Q1162 38 1150 38 H652 Q640 38 640 26 V12" fill="none" stroke="#E30613" stroke-width="5" stroke-linecap="round"/>
+  <path d="M626 18 L640 2 L654 18 Z" fill="#E30613"/>
+  <rect x="806" y="20" width="190" height="34" rx="17" fill="#E30613"/>
+  <text x="901" y="44" font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="19" fill="#fff" text-anchor="middle">× 3 iteraciones</text>
+</svg>
+
+<div class="dt-abajo">
+<div class="dt-datos">
+<div class="dt-dato"><b>8</b><span>piezas impresas en PLA</span></div>
+<div class="dt-dato"><b>17 × 17 × 14</b><span>centímetros</span></div>
+<div class="dt-dato"><b>2 + 1</b><span>ventiladores y switch integrados</span></div>
+</div>
+<figure class="dt-figura">
+<img src="assets/disenoTinkercad.png" alt="Diseño 3D de la carcasa en TinkerCAD">
+<figcaption>Diseño 3D final de la carcasa</figcaption>
+</figure>
+</div>
+```
+
 
 ## Metodología — Equipos y red {data-menu-title="Objetivo 1 · Equipos"}
 
-::: {.columnas}
-::: {.col-txt}
+```{=html}
+<div class="eq-layout">
 
-- **1 nodo maestro** (Raspberry Pi 4) que coordina
-- **3 trabajadores** (Raspberry Pi 3) que ejecutan
-- Conmutador y enrutador de red
-- **Direcciones de red fijas** para cada nodo
+<div class="eq-grid">
 
-:::
-::: {.col-fig}
+<div class="eq-card eq-clave">
+<svg class="eq-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <rect x="30" y="18" width="140" height="94" rx="12" fill="#ffffff"/>
+  <g fill="#E30613"><circle cx="46" cy="34" r="5"/><circle cx="154" cy="34" r="5"/><circle cx="46" cy="96" r="5"/><circle cx="154" cy="96" r="5"/></g>
+  <rect x="66" y="40" width="46" height="46" rx="6" fill="#E30613"/>
+  <text x="89" y="71" font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="20" fill="#fff" text-anchor="middle">4B</text>
+  <g fill="#1B2A4A"><rect x="126" y="42" width="30" height="14" rx="3"/><rect x="126" y="62" width="30" height="14" rx="3"/></g>
+</svg>
+<span class="eq-tit">Maestro</span>
+<span class="eq-txt">Raspberry Pi 4B · 4 GB</span>
+</div>
 
-![Diagrama de la red del clúster](assets/topologiaRed.png)
+<div class="eq-card">
+<svg class="eq-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <g fill="#1B2A4A"><rect x="8" y="34" width="56" height="62" rx="9"/><rect x="72" y="34" width="56" height="62" rx="9"/><rect x="136" y="34" width="56" height="62" rx="9"/></g>
+  <g fill="#E30613"><rect x="20" y="48" width="32" height="32" rx="5"/><rect x="84" y="48" width="32" height="32" rx="5"/><rect x="148" y="48" width="32" height="32" rx="5"/></g>
+  <g font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="13" fill="#fff" text-anchor="middle"><text x="36" y="69">3B+</text><text x="100" y="69">3B</text><text x="164" y="69">3B</text></g>
+</svg>
+<span class="eq-tit">3 trabajadores</span>
+<span class="eq-txt">Raspberry Pi 3 · 1 GB</span>
+</div>
 
-:::
-:::
+<div class="eq-card">
+<svg class="eq-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <rect x="14" y="70" width="172" height="40" rx="9" fill="#1B2A4A"/>
+  <g fill="#ffffff"><rect x="28" y="82" width="16" height="16" rx="3"/><rect x="50" y="82" width="16" height="16" rx="3"/><rect x="72" y="82" width="16" height="16" rx="3"/><rect x="94" y="82" width="16" height="16" rx="3"/><rect x="116" y="82" width="16" height="16" rx="3"/></g>
+  <g fill="#E30613"><circle cx="154" cy="90" r="5"/><circle cx="170" cy="90" r="5"/></g>
+  <rect x="50" y="26" width="100" height="26" rx="8" fill="#E30613"/>
+  <path d="M66 26 V8 M134 26 V8" stroke="#E30613" stroke-width="6" stroke-linecap="round"/>
+  <path d="M100 52 V70" stroke="#9AA1AD" stroke-width="6" stroke-linecap="round"/>
+</svg>
+<span class="eq-tit">Switch y router</span>
+<span class="eq-txt">Fast Ethernet · MikroTik</span>
+</div>
 
+<div class="eq-card">
+<svg class="eq-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <path d="M100 8 C72 8 52 28 52 54 C52 86 100 124 100 124 C100 124 148 86 148 54 C148 28 128 8 100 8 Z" fill="#E30613"/>
+  <circle cx="100" cy="54" r="28" fill="#ffffff"/>
+  <text x="100" y="63" font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="24" fill="#1B2A4A" text-anchor="middle">IP</text>
+</svg>
+<span class="eq-tit">IP estática</span>
+<span class="eq-txt">por nodo</span>
+</div>
 
-<!-- ─── METODOLOGÍA OBJ 1 — PREPARACIÓN Y ORQUESTACIÓN ─── -->
+</div>
+
+<figure class="eq-figura">
+<img src="assets/topologiaRed.png" alt="Topología de red del clúster">
+<figcaption>Topología de red del clúster</figcaption>
+</figure>
+
+</div>
+```
+
 
 ## Metodología — Preparación y orquestación {data-menu-title="Objetivo 1 · Configuración"}
 
-::: {.columnas}
+::: {.columnas .arriba}
 ::: {.col-txt .compacto}
 
-- **Sistema estable:** se **bloquearon las versiones** del núcleo (kernel) y el firmware, y se desactivaron las actualizaciones automáticas → un entorno que no cambia entre pruebas.
-- **Orquestación con K3s:** primero el nodo maestro, luego cada trabajador se une al clúster.
-- **Pantallas por nodo:** un programa en Python muestra en vivo el procesador, la temperatura y la memoria.
+- **Entorno estable:** kernel y firmware con versiones bloqueadas; sin actualizaciones automáticas.
+- **K3s:** primero el maestro; luego se unen los trabajadores.
+- **Telemetría por nodo:** pantalla OLED con CPU, temperatura y memoria.
 
-<div class="qr-box">
+<div class="qr-box qr-fijo">
 <img src="assets/qrGithub.png" alt="Código QR del repositorio">
 <span class="qr-txt"><b>Todos los comandos</b><br>Escanea el código o visita:<br><a href="https://github.com/eval-cluster/cluster">github.com/eval-cluster/cluster</a></span>
 </div>
@@ -518,24 +656,22 @@ curl -sfL https://get.k3s.io | \
 :::
 
 
-<!-- ─── 8 · RESULTADOS OBJ 1 — PROTOTIPO ─── -->
-
 ## Resultado — Prototipo físico {data-menu-title="Objetivo 1 · Prototipo"}
 
-::: {.columnas}
-::: {.col-txt}
+::: {.columnas .arriba}
+::: {.col-txt .angosta}
 
-- Carcasa **impresa en 3D**: 4 nodos, ventiladores y conmutador en un solo cuerpo
-- Una **pantalla por nodo** con su estado en vivo
-- **Bajo costo:** ~464 dólares → hasta **87 % de ahorro** frente a la nube
+- Carcasa **impresa en 3D**: 4 nodos, ventiladores y switch en un solo cuerpo
+- **Telemetría** en pantalla por nodo
+- **Costo: 464 USD**
 
-<div class="qr-box">
+<div class="qr-box qr-fijo">
 <img src="assets/qrDiseno3D.png" alt="Código QR del diseño 3D">
 <span class="qr-txt"><b>Diseño 3D del clúster</b><br>Escanea el código o visita:<br><a href="https://www.tinkercad.com/things/l75tymLzWOO-cluster-4-raspberrypi">tinkercad.com/things/cluster-4-raspberrypi</a></span>
 </div>
 
 :::
-::: {.col-fig .stack}
+::: {.col-fig .lado}
 
 ![Clúster ensamblado](assets/clusterArmado.png)
 
@@ -545,42 +681,101 @@ curl -sfL https://get.k3s.io | \
 :::
 
 
-<!-- ─── 9 · RESULTADOS OBJ 1 — FUNCIONANDO ─── -->
-
 ## Resultado — Clúster operativo {data-menu-title="Objetivo 1 · Funcionando"}
 
-::: {.columnas}
-::: {.col-txt}
-
-- Los **4 nodos activos** y reconocidos por Kubernetes (K3s)
-- **Ningún fallo** de nodo en las 21 ejecuciones → un entorno **estable y determinista**
-
-:::
-::: {.col-fig}
-
-![Los cuatro nodos activos (kubectl get nodes)](assets/getNode-O-Wide.png)
-
-:::
+::: {.fig-ancha .terminal}
+![Los cuatro nodos activos (kubectl get nodes -o wide)](assets/getNode-O-Wide.png)
 :::
 
+<div class="dato-par">
+<div class="concept-card"><b>4 nodos en estado Ready</b> — orquestados con K3s.</div>
+<div class="concept-card"><b>0 fallos de nodo</b> en las 21 ejecuciones → entorno estable y determinista.</div>
+</div>
 
-<!-- ═══════════════ 10 · SECCIÓN OBJETIVO 2 ═══════════════ -->
+
+<!-- ═══════════════ SECCIÓN OBJETIVO 2 ═══════════════ -->
 
 ## Objetivo 2 — Evaluación del rendimiento {.seccion data-state="portada" data-menu-title="► Objetivo 2"}
 
 <span class="numero-seccion">02</span>
 
 
-<!-- ─── 11 · METODOLOGÍA OBJ 2 — CÓMO SE MIDIÓ ─── -->
+## Metodología — Hipótesis de partida {data-menu-title="Objetivo 2 · Hipótesis"}
+
+```{=html}
+<div class="flujo-hipotesis">
+
+<div class="fh-paso fragment">
+<span class="fh-num">1</span>
+<svg class="fh-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <path d="M22 12 V108 H188" fill="none" stroke="#1B2A4A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="fh-curva" pathLength="1" d="M24 98 H70 L112 95 L138 84 L158 36 L178 14" fill="none" stroke="#E30613" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle class="fh-punto" cx="178" cy="14" r="9" fill="#E30613"/>
+</svg>
+<span class="fh-tit">Pruebas preliminares</span>
+<span class="fh-txt">La latencia se dispara bajo la carga más exigente.</span>
+</div>
+
+<div class="fh-paso fh-central fragment">
+<span class="fh-num">2</span>
+<svg class="fh-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <g stroke="#ffffff" stroke-width="5" stroke-linecap="round">
+    <path d="M70 20 V34 M100 20 V34 M130 20 V34 M70 96 V110 M100 96 V110 M130 96 V110 M42 50 H56 M42 65 H56 M42 80 H56 M144 50 H158 M144 65 H158 M144 80 H158"/>
+  </g>
+  <rect x="56" y="34" width="88" height="62" rx="10" fill="#ffffff"/>
+  <rect x="76" y="50" width="48" height="30" rx="5" fill="#E30613"/>
+  <g class="fh-calor" fill="none" stroke="#FFD9DC" stroke-width="5" stroke-linecap="round">
+    <path d="M172 96 q-9 -14 0 -28 q9 -14 0 -28"/>
+    <path d="M190 96 q-9 -14 0 -28 q9 -14 0 -28"/>
+    <path d="M10 96 q-9 -14 0 -28 q9 -14 0 -28"/>
+    <path d="M28 96 q-9 -14 0 -28 q9 -14 0 -28"/>
+  </g>
+</svg>
+<span class="fh-tit">Hipótesis</span>
+<span class="fh-txt"><i>Thermal throttling</i> de los procesadores.</span>
+</div>
+
+<div class="fh-paso fragment">
+<span class="fh-num">3</span>
+<svg class="fh-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <g transform="translate(52 65)">
+    <circle r="46" fill="none" stroke="#1B2A4A" stroke-width="5"/>
+    <g class="fh-aspas" fill="#E30613">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1.1s" repeatCount="indefinite"/>
+      <path d="M0 -6 C-16 -40 16 -44 8 -8 Z"/>
+      <path d="M0 -6 C-16 -40 16 -44 8 -8 Z" transform="rotate(120)"/>
+      <path d="M0 -6 C-16 -40 16 -44 8 -8 Z" transform="rotate(240)"/>
+    </g>
+    <circle r="8" fill="#1B2A4A"/>
+  </g>
+  <g transform="translate(150 65)">
+    <circle r="46" fill="none" stroke="#9AA1AD" stroke-width="5"/>
+    <g fill="#B9BFC9">
+      <path d="M0 -6 C-16 -40 16 -44 8 -8 Z"/>
+      <path d="M0 -6 C-16 -40 16 -44 8 -8 Z" transform="rotate(120)"/>
+      <path d="M0 -6 C-16 -40 16 -44 8 -8 Z" transform="rotate(240)"/>
+    </g>
+    <circle r="8" fill="#9AA1AD"/>
+    <path d="M-34 34 L34 -34" stroke="#1B2A4A" stroke-width="7" stroke-linecap="round"/>
+  </g>
+</svg>
+<span class="fh-tit">Diseño experimental</span>
+<span class="fh-txt">Carcasa con refrigeración activa y comparación <b>con / sin ventiladores</b>.</span>
+</div>
+
+</div>
+```
+
 
 ## Metodología — Cómo se midió {data-menu-title="Objetivo 2 · Cómo se midió"}
 
 ::: {.columnas}
 ::: {.col-txt}
 
-- **Dos escenarios:** con y sin ventiladores. Aplicación de prueba: el servidor web **NGINX**.
-- **Tres niveles de carga:** 50, 200 y 500 usuarios simultáneos (uso normal, intermedio y exigencia máxima).
-- **Monitoreo** del procesador, la red y la temperatura con **Prometheus y Grafana**.
+- **Aplicación:** NGINX, 3 réplicas
+- **Carga (K6):** 50, 200 y 500 usuarios virtuales
+- **Escenarios:** con y sin ventiladores · 3 repeticiones
+- **Monitoreo:** Prometheus y Grafana
 
 :::
 ::: {.col-fig}
@@ -590,85 +785,76 @@ curl -sfL https://get.k3s.io | \
 :::
 :::
 
+::: {.dato-tecnico}
+18 ejecuciones de 5 min · ambiente a 21 °C · cada ejecución inicia con el maestro bajo 72 °C (sin ventiladores) o bajo 35 °C (con ventiladores)
+:::
 
-<!-- ─── 12 · METODOLOGÍA OBJ 2 — CUELLO DE BOTELLA ─── -->
 
 ## Metodología — Hallar el cuello de botella {data-menu-title="Objetivo 2 · Cuello de botella"}
 
 ::: {.columnas}
 ::: {.col-fig}
 
-![Se cambia solo por dónde entran las peticiones](assets/experimentoCuelloBotella.png)
+![Solo cambia el punto de entrada del tráfico](assets/experimentoCuelloBotella.png)
 
 :::
 ::: {.col-txt}
 
-Experimento extra: en lugar de enviar todo al maestro, se **reparten** las peticiones entre los trabajadores.
+Experimento complementario: el tráfico va **directo a los trabajadores**, sin pasar por el maestro.
 
 ::: {.caja-importante}
-Si repartir **mejora mucho** → el problema era la concentración en el maestro.
+Si **mejora mucho** → el límite era la centralización en el maestro.
 
-Si **no mejora** → el problema está en la **red de los trabajadores**.
+Si **no mejora** → está en la **red de los trabajadores**.
 :::
 
 :::
 :::
 
-
-<!-- ─── RESULTADOS OBJ 2 — DESPLIEGUE NGINX ─── -->
 
 ## Resultado — Despliegue de la aplicación web {data-menu-title="Objetivo 2 · Despliegue"}
 
-::: {.columnas}
-::: {.col-txt}
-
-- Se desplegó el servidor web **NGINX con 3 réplicas**, repartidas por Kubernetes en los **3 nodos trabajadores**.
-- Confirma que **K3s orquesta** correctamente sobre hardware embebido, incluso en nodos de solo **1 GB de RAM**.
-
-:::
-::: {.col-fig}
-
+::: {.fig-ancha .terminal}
 ![Una réplica de NGINX en cada trabajador (kubectl get pods -o wide)](assets/getPods-O-Wide.png)
-
-:::
 :::
 
+<div class="dato-par">
+<div class="concept-card"><b>NGINX con 3 réplicas</b> — una por nodo trabajador.</div>
+<div class="concept-card"><b>K3s orquesta</b> incluso en nodos de solo 1 GB de RAM.</div>
+</div>
 
-<!-- ─── 13 · RESULTADOS OBJ 2 — RENDIMIENTO ─── -->
 
 ## Resultado — Rendimiento por carga {data-menu-title="Objetivo 2 · Rendimiento"}
 
 ::: {.columnas}
 ::: {.col-fig}
 
-![Throughput (barras) y latencia (línea) según la carga](assets/rendimientoCarga.png)
+![Throughput (barras) y latencia p95 (línea) según la carga](assets/rendimientoCarga.png)
 
 :::
 ::: {.col-txt}
 
-- El **throughput** crece con la carga: de 40 a **915** peticiones por segundo.
-- La **latencia** se mantiene baja hasta 200 usuarios y **se dispara** a 700 ms en carga alta.
+- **Throughput:** 40 → 318 → **915** peticiones/s
+- **Latencia p95:** ≈ 4 ms hasta 200 usuarios; **700 ms** con 500
 
 ::: {.caja-importante}
-Responde bien hasta 200 usuarios y **se satura en 500** — más lento, pero **sin un solo fallo**.
+Se satura con 500 usuarios, pero **sin un solo fallo**.
 :::
 
 :::
 :::
 
-
-<!-- ─── 14 · RESULTADOS OBJ 2 — TEMPERATURA Y ENFRIAMIENTO ─── -->
 
 ## Resultado — Enfriar casi no mejora {data-menu-title="Objetivo 2 · Enfriamiento"}
 
 ::: {.columnas}
 ::: {.col-txt}
 
-- Los ventiladores bajaron la temperatura del maestro de **74 °C a 35 °C**.
-- Pero el rendimiento **apenas cambió**: solo **1.6 %** más peticiones por segundo.
+- Maestro: **74 °C → 35 °C**
+- Throughput: solo **+1.6 %**
 
 ::: {.caja-importante}
-La temperatura **no limita** el rendimiento web, porque el procesador **nunca trabaja al límite**.
+No hubo *thermal throttling*: la temperatura **no limita** el rendimiento web.
 :::
 
 :::
@@ -679,125 +865,303 @@ La temperatura **no limita** el rendimiento web, porque el procesador **nunca tr
 :::
 :::
 
+::: {.dato-tecnico}
+74.33 → 34.93 °C · latencia p95 −0.2 % · umbral de 80–85 °C nunca alcanzado
+:::
 
-<!-- ─── 15 · RESULTADOS OBJ 2 — ANÁLISIS INTERNO ─── -->
 
 ## Resultado — Qué está pasando por dentro {data-menu-title="Objetivo 2 · Análisis interno"}
 
-::: {.columnas}
-::: {.col-txt}
+<div class="medidores grande">
+<div class="medidor-fila">
+<div class="m-titulo">Tiempo en espera de respuesta <span>del total de cada petición</span></div>
+<div class="medidor-barra"><i style="width:99.1%"></i><b class="dentro">99 %</b></div>
+</div>
+<div class="medidor-fila">
+<div class="m-titulo">Uso de CPU <span>nodos trabajadores</span></div>
+<div class="medidor-barra"><i style="width:28%"></i><b class="fuera" style="left:calc(28% + 14px)">menos del 28 %</b></div>
+</div>
+<div class="medidor-fila">
+<div class="m-titulo">Ocupación del enlace <span>100 Mbps</span></div>
+<div class="medidor-barra"><i style="width:8.3%"></i><b class="fuera" style="left:calc(8.3% + 14px)">8 %</b></div>
+</div>
+</div>
 
-- El **procesador** quedó casi libre (menos del 28 %)
-- La **red** se usó solo al 8 %
-- Casi todo el tiempo (**99 %**) se va **esperando la respuesta**, no enviando datos
-
-::: {.caja-importante}
-Ni el procesador ni la red están saturados: el problema **no es la potencia, sino la espera**.
+::: {.caja-importante .ajustada}
+Ni la CPU ni el ancho de banda están saturados: el retardo ocurre **antes de que empiece la respuesta**.
 :::
 
-:::
-::: {.col-fig}
-
-![En qué se va el tiempo y cuánto se usan los recursos](assets/analisisInterno.png)
-
-:::
-:::
-
-
-<!-- ─── 16 · RESULTADOS OBJ 2 — CUELLO DE BOTELLA ─── -->
-
-## Resultado — Repartir la carga desde la PC {data-menu-title="Objetivo 2 · Experimento"}
-
-::: {.columnas}
-::: {.col-txt}
-
-- Desde la PC de pruebas se **repartió la carga** directamente entre los 3 trabajadores, en vez de enviarla toda al maestro.
-
-::: {.caja-importante}
-**No era la concentración en el maestro:** el throughput apenas subió (**3.4 %**) y la respuesta se volvió **más irregular**. Cada trabajador recibe el tráfico por su **propia conexión (puerto USB)**, igual de limitada.
-:::
-
-:::
-::: {.col-fig}
-
-![Centralizado frente a repartido, con carga alta](assets/experimentoDistribuido.png)
-
-:::
+::: {.dato-tecnico}
+K6: `http_req_waiting` 433.26 ms (99.1 %) · `http_req_receiving` 3.82 ms (0.9 %) · 8.31 Mbps
 :::
 
 
-<!-- ─── RESULTADO — CUELLO DE BOTELLA (SÍNTESIS) ─── -->
+## Resultado — Tráfico distribuido {data-menu-title="Objetivo 2 · Experimento"}
+
+::: {.columnas .arriba}
+::: {.col-txt .angosta}
+
+<div class="cifra-pila">
+<div class="cifra-card cifra-azul">
+<span class="cf-rotulo">Throughput</span>
+<span class="cf-valor">+3.4 %</span>
+<span class="cf-sub">apenas mejora</span>
+</div>
+<div class="cifra-card">
+<span class="cf-rotulo">Latencia p95</span>
+<span class="cf-valor">+24 %</span>
+<span class="cf-sub">y más irregular</span>
+</div>
+</div>
+
+:::
+::: {.col-fig .dist}
+
+![Centralizado frente a distribuido, con carga alta](assets/experimentoDistribuido.png)
+
+:::
+:::
+
+::: {.caja-importante .pegada}
+El límite **no era el maestro**: cada trabajador recibe el tráfico por su propia interfaz, igual de restringida.
+:::
+
 
 ## Resultado — El cuello de botella {data-menu-title="Objetivo 2 · Factor limitante"}
 
-::: {.fig-ancha}
+::: {.fig-ancha .media}
 ![Descarte de causas: el límite es la red de los trabajadores](assets/cuelloBotella.png)
 :::
 
-::: {.caja-importante}
-Lo que limita el rendimiento es la **red de los nodos trabajadores**: en la Raspberry Pi 3 la conexión pasa por el **puerto USB**, y eso hace lento el manejo de cada petición.
+::: {.caja-importante .pegada}
+Factor limitante, **por descarte de causas**: la **red de los nodos trabajadores**. En la Raspberry Pi 3, el Ethernet pasa por el **bus USB**.
 :::
 
 
-<!-- ═══════════════ 17 · SECCIÓN DISCUSIÓN ═══════════════ -->
+<!-- ─── ANALOGÍA PARA EL PÚBLICO GENERAL ─── -->
+
+## Analogía — El flujo de peticiones como flujo de agua {data-menu-title="Analogía · Flujo de peticiones"}
+
+<div class="tuberia" data-escena="carga"></div>
+<div class="tb-pasos"><span class="fragment" data-modo="media"></span><span class="fragment" data-modo="alta"></span></div>
+
+
+## Analogía — La interfaz de red como factor limitante {data-menu-title="Analogía · Factor limitante"}
+
+```{=html}
+<div class="zoom-llave">
+<svg viewBox="0 0 1180 345" role="img" aria-label="Comparación del camino de red en la Raspberry Pi 3 y en la Raspberry Pi 4">
+  <text class="z-tit" x="20" y="28">Nodo trabajador · Raspberry Pi 3</text>
+  <rect x="786" y="6" width="374" height="34" rx="17" fill="#E30613"/>
+  <text class="z-vel" x="973" y="29">Puerto: 100 Mbps (3B) · ≈ 300 Mbps (3B+)</text>
+  <text class="z-sub" x="20" y="50">Sin controlador Ethernet propio: el tráfico de red pasa por el bus USB, que es compartido.</text>
+  <g fill="none" stroke-linecap="round">
+    <path d="M20 102 H1160" stroke="#AEB8C8" stroke-width="34"/>
+    <path d="M20 102 H1160" stroke="#DDE3EC" stroke-width="28"/>
+  </g>
+  <g fill="#2F80ED">
+    <circle cy="102" r="6"><animate attributeName="cx" from="20" to="352" dur="1.2s" repeatCount="indefinite"/></circle>
+    <circle cy="102" r="6"><animate attributeName="cx" from="20" to="352" dur="1.2s" begin="0.4s" repeatCount="indefinite"/></circle>
+    <circle cy="102" r="6"><animate attributeName="cx" from="20" to="352" dur="1.2s" begin="0.8s" repeatCount="indefinite"/></circle>
+    <circle cx="366" cy="102" r="6"/><circle cx="380" cy="102" r="6"/><circle cx="394" cy="102" r="6"/><circle cx="408" cy="102" r="6"/>
+    <circle cx="422" cy="102" r="6"/><circle cx="436" cy="102" r="6"/><circle cx="450" cy="102" r="6"/><circle cx="464" cy="102" r="6"/>
+    <circle cx="478" cy="102" r="6"/><circle cx="492" cy="102" r="6"/><circle cx="506" cy="102" r="6"/><circle cx="520" cy="102" r="6"/>
+    <circle cx="534" cy="102" r="6"/><circle cx="548" cy="102" r="6"/>
+    <circle cy="102" r="6"><animate attributeName="cx" from="760" to="900" dur="1.6s" repeatCount="indefinite"/></circle>
+  </g>
+  <rect x="560" y="64" width="200" height="76" rx="12" fill="#E30613"/>
+  <text class="z-rot" x="660" y="96">Llave compartida</text>
+  <text class="z-rot-sub" x="660" y="116">Ethernet sobre bus USB</text>
+  <rect x="900" y="64" width="200" height="76" rx="12" fill="#5B6068"/>
+  <text class="z-rot" x="1000" y="96">Procesador</text>
+  <text class="z-rot-sub" x="1000" y="116">uso menor al 28 %</text>
+  <text class="z-nota" x="450" y="158">las peticiones hacen cola aquí</text>
+
+  <text class="z-tit" x="20" y="194">Nodo maestro · Raspberry Pi 4</text>
+  <rect x="952" y="172" width="208" height="34" rx="17" fill="#2E7D32"/>
+  <text class="z-vel" x="1056" y="195">Puerto: 1000 Mbps</text>
+  <text class="z-sub" x="20" y="216">Controlador Gigabit Ethernet dedicado.</text>
+  <g fill="none" stroke-linecap="round">
+    <path d="M20 268 H1160" stroke="#AEB8C8" stroke-width="34"/>
+    <path d="M20 268 H1160" stroke="#DDE3EC" stroke-width="28"/>
+  </g>
+  <g fill="#2F80ED">
+    <circle cy="268" r="6"><animate attributeName="cx" from="20" to="900" dur="2s" repeatCount="indefinite"/></circle>
+    <circle cy="268" r="6"><animate attributeName="cx" from="20" to="900" dur="2s" begin="0.25s" repeatCount="indefinite"/></circle>
+    <circle cy="268" r="6"><animate attributeName="cx" from="20" to="900" dur="2s" begin="0.5s" repeatCount="indefinite"/></circle>
+    <circle cy="268" r="6"><animate attributeName="cx" from="20" to="900" dur="2s" begin="0.75s" repeatCount="indefinite"/></circle>
+    <circle cy="268" r="6"><animate attributeName="cx" from="20" to="900" dur="2s" begin="1s" repeatCount="indefinite"/></circle>
+    <circle cy="268" r="6"><animate attributeName="cx" from="20" to="900" dur="2s" begin="1.25s" repeatCount="indefinite"/></circle>
+    <circle cy="268" r="6"><animate attributeName="cx" from="20" to="900" dur="2s" begin="1.5s" repeatCount="indefinite"/></circle>
+    <circle cy="268" r="6"><animate attributeName="cx" from="20" to="900" dur="2s" begin="1.75s" repeatCount="indefinite"/></circle>
+  </g>
+  <rect x="560" y="230" width="200" height="76" rx="12" fill="#2E7D32"/>
+  <text class="z-rot" x="660" y="262">Llave de paso directo</text>
+  <text class="z-rot-sub" x="660" y="282">controlador dedicado</text>
+  <rect x="900" y="230" width="200" height="76" rx="12" fill="#5B6068"/>
+  <text class="z-rot" x="1000" y="262">Procesador</text>
+  <text class="z-nota-ok" x="450" y="324">sin cola</text>
+</svg>
+</div>
+```
+
+::: {.dato-tecnico}
+Velocidades nominales de cada puerto (Gupta et al.); en el prototipo, el switch Fast Ethernet fija todos los enlaces en 100 Mbps: la diferencia está en el camino (bus USB compartido frente a controlador dedicado) · atribución por descarte de causas y literatura; el mecanismo exacto queda como trabajo futuro
+:::
+
+
+<!-- ═══════════════ SECCIÓN DISCUSIÓN ═══════════════ -->
 
 ## Discusión {.seccion data-state="portada" data-menu-title="► Discusión"}
 
 <span class="numero-seccion">03</span>
 
 
-<!-- ─── 18 · DISCUSIÓN — COMPARACIÓN ─── -->
-
 ## Discusión — Comparación con otros estudios {data-menu-title="Discusión · Comparación"}
 
-::: {.columnas}
-::: {.col-txt}
+```{=html}
+<div class="vs-grid">
 
-- **Enfriamiento (Benoit-Cattin y otros):** lograron gran mejora, pero con **inteligencia artificial**, que exige mucho al procesador. Una carga web no lo hace.
-- **Tiempo de respuesta (Sidharta y otros):** con Raspberry Pi 4 y red rápida tuvieron más demora que nosotros → la **configuración** pesa tanto como el equipo.
-- **Costo y fiabilidad:** ~464 dólares (en línea con Shoop y Sankiti) y **ningún fallo**, frente a las fallas de Lakshminarayanan.
+<div class="vs-card">
+<span class="vs-tit">Mejora al enfriar</span>
+<span class="vs-fuente">Benoit-Cattin et al.</span>
+<div class="vs-fila"><span class="vs-rot">Inferencia de IA · CPU al límite</span><div class="vs-barra"><i class="vs-otro" style="width:90%"></i></div><b class="vs-val">+90 %</b></div>
+<div class="vs-fila"><span class="vs-rot">Aquí · carga web</span><div class="vs-barra"><i class="vs-aqui" style="width:2.2%"></i></div><b class="vs-val vs-rojo">+1.6 %</b></div>
+</div>
 
+<div class="vs-card">
+<span class="vs-tit">Latencia media</span>
+<span class="vs-fuente">Sidharta et al.</span>
+<div class="vs-fila"><span class="vs-rot">4 Raspberry Pi 4</span><div class="vs-barra"><i class="vs-otro" style="width:100%"></i></div><b class="vs-val">3120 ms</b></div>
+<div class="vs-fila"><span class="vs-rot">Aquí</span><div class="vs-barra"><i class="vs-aqui" style="width:14%"></i></div><b class="vs-val vs-rojo">437 ms</b></div>
+</div>
+
+<div class="vs-card vs-clave">
+<span class="vs-tit">Costo y fiabilidad</span>
+<span class="vs-fuente">Shoop · Sankiti · Lakshminarayanan</span>
+<span class="vs-grande">464 USD</span>
+<span class="vs-rot vs-centro">dentro del rango de la literatura</span>
+<span class="vs-grande">0 fallos</span>
+</div>
+
+</div>
+```
+
+::: {.caja-importante .pegada}
+El *thermal throttling* aparece con cargas **intensivas en CPU**; una carga web no lo es.
 :::
-::: {.col-fig}
 
-![Contraste de este trabajo frente a otros estudios](assets/comparacionEstudios.png)
-
-:::
-:::
-
-::: {.caja-importante}
-El **freno por calor solo aparece con tareas que exigen mucho al procesador**. Una carga web no lo hace: por eso enfriar no mejora el rendimiento.
-:::
-
-
-<!-- ─── 19 · DISCUSIÓN — IMPLICACIONES Y LIMITACIONES ─── -->
 
 ## Discusión — Qué significa {data-menu-title="Discusión · Implicaciones"}
 
-- Para cargas web, conviene invertir primero en **mejor red**, no en enfriamiento.
-- El enfriamiento igual sirve: **protege los equipos** (más vida útil) y los prepara para **tareas más exigentes** en el futuro.
-- Con esto queda claro **qué mejorar primero** en un clúster de este tipo.
+```{=html}
+<div class="ti-grid ti-3">
+
+<div class="ti-card ti-clave">
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <g fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round">
+    <path d="M100 52 V30 M100 78 V100 M70 65 H40 M130 65 H160"/>
+  </g>
+  <rect x="70" y="52" width="60" height="26" rx="6" fill="#ffffff"/>
+  <g fill="#E30613"><circle cx="84" cy="65" r="4"/><circle cx="100" cy="65" r="4"/><circle cx="116" cy="65" r="4"/></g>
+  <g fill="#ffffff"><rect x="84" y="6" width="32" height="24" rx="5"/><rect x="84" y="100" width="32" height="24" rx="5"/><rect x="8" y="53" width="32" height="24" rx="5"/><rect x="160" y="53" width="32" height="24" rx="5"/></g>
+</svg>
+<span class="ti-txt">En cargas web, invertir primero en <b>red</b>, no en refrigeración.</span>
+</div>
+
+<div class="ti-card">
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <path d="M100 8 L150 26 V62 C150 92 128 112 100 124 C72 112 50 92 50 62 V26 Z" fill="none" stroke="#1B2A4A" stroke-width="6" stroke-linejoin="round"/>
+  <g stroke="#E30613" stroke-width="4" stroke-linecap="round"><path d="M88 40 V48 M100 40 V48 M112 40 V48 M88 84 V92 M100 84 V92 M112 84 V92 M72 58 H80 M72 74 H80 M120 58 H128 M120 74 H128"/></g>
+  <rect x="80" y="48" width="40" height="36" rx="6" fill="#E30613"/>
+</svg>
+<span class="ti-txt">La refrigeración <b>protege el hardware</b> y habilita cargas intensivas en CPU.</span>
+</div>
+
+<div class="ti-card">
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <g font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="26" fill="#1B2A4A">
+    <text x="18" y="38">1</text><text x="18" y="76">2</text><text x="18" y="114">3</text>
+  </g>
+  <rect x="48" y="16" width="140" height="26" rx="8" fill="#E30613"/>
+  <rect x="48" y="54" width="92" height="26" rx="8" fill="#9AA1AD"/>
+  <rect x="48" y="92" width="58" height="26" rx="8" fill="#C9CED6"/>
+</svg>
+<span class="ti-txt">Queda claro <b>qué mejorar primero</b> en un clúster de este tipo.</span>
+</div>
+
+</div>
+```
 
 
-<!-- ─── DISCUSIÓN — ALCANCE Y LIMITACIONES ─── -->
+## Discusión — Limitaciones {data-menu-title="Discusión · Limitaciones"}
 
-## Discusión — Hasta dónde llega este trabajo {data-menu-title="Discusión · Limitaciones"}
+```{=html}
+<div class="ti-grid ti-5">
 
-- **Repeticiones:** 3 por prueba → tendencias claras y consistentes, pero **no un análisis estadístico formal**.
-- **Un solo tipo de carga:** páginas web sencillas, que no exigen al procesador. Otras cargas (bases de datos, inteligencia artificial, archivos grandes) podrían tener **otro factor limitante** e incluso activar el freno por calor.
-- **Equipos distintos entre sí:** un maestro Raspberry Pi 4 y tres trabajadores Raspberry Pi 3 de dos versiones → refleja un caso real, pero **dificulta aislar cada variable**.
-- **Sin grupo de comparación:** no se probó un clúster con red dedicada; la conclusión sobre la red se apoya en el **descarte de causas y en la literatura**, no en una comparación directa.
-- **Pruebas cortas (5 minutos):** miden el rendimiento estable, pero **no el desgaste** de un uso prolongado (por ejemplo, las tarjetas de memoria).
+<div class="ti-card">
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <g fill="#E30613"><circle cx="50" cy="65" r="22"/><circle cx="100" cy="65" r="22"/><circle cx="150" cy="65" r="22"/></g>
+  <g font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="22" fill="#fff" text-anchor="middle"><text x="50" y="73">r1</text><text x="100" y="73">r2</text><text x="150" y="73">r3</text></g>
+</svg>
+<span class="ti-tit">3 repeticiones</span>
+<span class="ti-txt">Tendencias consistentes, sin inferencia estadística formal.</span>
+</div>
+
+<div class="ti-card">
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <rect x="34" y="14" width="132" height="102" rx="10" fill="none" stroke="#1B2A4A" stroke-width="6"/>
+  <path d="M34 40 H166" stroke="#1B2A4A" stroke-width="6"/>
+  <g fill="#E30613"><circle cx="50" cy="27" r="5"/><circle cx="66" cy="27" r="5"/></g>
+  <g stroke="#9AA1AD" stroke-width="7" stroke-linecap="round"><path d="M54 60 H146 M54 78 H146 M54 96 H112"/></g>
+</svg>
+<span class="ti-tit">Un solo tipo de carga</span>
+<span class="ti-txt">Contenido web estático.</span>
+</div>
+
+<div class="ti-card">
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <rect x="14" y="30" width="78" height="70" rx="10" fill="#1B2A4A"/>
+  <text x="53" y="74" font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="26" fill="#fff" text-anchor="middle">4B</text>
+  <g fill="#E30613"><rect x="108" y="12" width="40" height="32" rx="6"/><rect x="152" y="50" width="40" height="32" rx="6"/><rect x="108" y="88" width="40" height="32" rx="6"/></g>
+  <g font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="13" fill="#fff" text-anchor="middle"><text x="128" y="33">3B+</text><text x="172" y="71">3B</text><text x="128" y="109">3B</text></g>
+</svg>
+<span class="ti-tit">Clúster heterogéneo</span>
+<span class="ti-txt">Dificulta aislar cada variable.</span>
+</div>
+
+<div class="ti-card">
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <rect x="16" y="28" width="74" height="74" rx="10" fill="#E30613"/>
+  <rect x="110" y="28" width="74" height="74" rx="10" fill="none" stroke="#9AA1AD" stroke-width="5" stroke-dasharray="10 8"/>
+  <text x="147" y="80" font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="44" fill="#9AA1AD" text-anchor="middle">?</text>
+  <path d="M38 66 l12 12 l22 -26" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+<span class="ti-tit">Sin grupo de contraste</span>
+<span class="ti-txt">con red dedicada: el bus USB se señala por descarte de causas y literatura.</span>
+</div>
+
+<div class="ti-card">
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <circle cx="100" cy="72" r="48" fill="none" stroke="#1B2A4A" stroke-width="6"/>
+  <path d="M88 12 H112 M100 12 V24" stroke="#1B2A4A" stroke-width="7" stroke-linecap="round"/>
+  <path d="M100 72 V24 A48 48 0 0 1 141.6 48 Z" fill="#E30613"/>
+  <circle cx="100" cy="72" r="6" fill="#1B2A4A"/>
+</svg>
+<span class="ti-tit">Pruebas de 5 minutos</span>
+<span class="ti-txt">No miden la degradación prolongada.</span>
+</div>
+
+</div>
+```
 
 
-<!-- ═══════════════ 20 · SECCIÓN CONCLUSIONES ═══════════════ -->
+<!-- ═══════════════ SECCIÓN CONCLUSIONES ═══════════════ -->
 
 ## Conclusiones y Recomendaciones {.seccion data-state="portada" data-menu-title="► Conclusiones"}
 
 <span class="numero-seccion">04</span>
 
-
-<!-- ─── 21 · CONCLUSIONES ─── -->
 
 ## Respuesta a la pregunta de investigación {data-menu-title="Conclusiones · Respuesta"}
 
@@ -812,56 +1176,171 @@ El **freno por calor solo aparece con tareas que exigen mucho al procesador**. U
 <div class="metric-card">
 <div class="m-label">Latencia</div>
 <div class="m-value">≈ 700 ms</div>
-<div class="m-sub">percentil 95 bajo carga alta (437 ms de media)<br>(≈ 3 ms en carga baja y media)</div>
+<div class="m-sub">percentil 95 bajo carga alta (437 ms de media)<br>(p95 de 3.6 y 3.8 ms en carga baja y media)</div>
 </div>
 </div>
 
 ::: {.caja-importante}
-**Sí, el clúster es viable** para desplegar aplicaciones web de bajo costo: alcanzó ese nivel de **throughput** y **latencia** atendiendo **toda la carga sin un solo fallo**. Su límite está en la **red**, no en el cómputo ni en la temperatura.
+**El clúster es viable**: atendió toda la carga **sin un solo fallo**. Su límite está en la **red**, no en el cómputo ni en la temperatura.
 :::
 
 
-<!-- ─── 22 · CONCLUSIONES (objetivos) ─── -->
+## Conclusiones — Cumplimiento de los objetivos {data-menu-title="Conclusiones · Objetivos"}
 
-## Conclusiones — Cumplimiento de los objetivos {data-menu-title="Conclusiones · Objetivos" .compacto}
+```{=html}
+<div class="ti-grid ti-3">
 
-**Objetivo general — cumplido**
+<div class="ti-card ti-clave">
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <path d="M36 108 A64 64 0 0 1 164 108" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+  <path d="M36 108 A64 64 0 0 1 68 52.6" fill="none" stroke="#1B2A4A" stroke-width="12" stroke-linecap="round"/>
+  <path d="M100 108 L142 58" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="100" cy="108" r="10" fill="#ffffff"/>
+</svg>
+<span class="ti-tit">Objetivo general</span>
+<span class="ti-chip">✓ Cumplido</span>
+<span class="ti-txt">Latencia y throughput <b>medidos</b> en 21 ejecuciones consistentes; además se determinó el <b>factor limitante</b>.</span>
+</div>
 
-- Quedó **medido el nivel de latencia y throughput** del clúster (21 ejecuciones consistentes) y, además, el estudio **determinó el factor que lo condiciona**.
+<div class="ti-card">
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <path d="M100 10 L160 38 L100 66 L40 38 Z" fill="#E30613"/>
+  <path d="M40 38 L100 66 V124 L40 96 Z" fill="#1B2A4A"/>
+  <path d="M160 38 L100 66 V124 L160 96 Z" fill="#5B6068"/>
+  <g fill="#ffffff" opacity="0.9"><rect x="112" y="76" width="36" height="7" rx="3" transform="skewY(-25)" /><rect x="112" y="92" width="36" height="7" rx="3" transform="skewY(-25)"/></g>
+</svg>
+<span class="ti-tit">Objetivo específico 1</span>
+<span class="ti-chip">✓ Cumplido</span>
+<span class="ti-txt">Prototipo <b>estable, funcional y reproducible</b>: 0 fallos en las 21 ejecuciones.</span>
+</div>
 
-**Objetivo específico 1 — cumplido**
+<div class="ti-card">
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <rect x="20" y="96" width="160" height="22" rx="8" fill="#1B2A4A"/>
+  <g fill="#E30613"><rect x="28" y="30" width="40" height="40" rx="7"/><rect x="80" y="30" width="40" height="40" rx="7"/><rect x="132" y="30" width="40" height="40" rx="7"/></g>
+  <g stroke="#ffffff" stroke-width="4" stroke-linecap="round"><path d="M38 44 H58 M38 56 H58 M90 44 H110 M90 56 H110 M142 44 H162 M142 56 H162"/></g>
+  <g stroke="#1B2A4A" stroke-width="5" stroke-linecap="round"><path d="M48 76 V92 M100 76 V92 M152 76 V92"/></g>
+</svg>
+<span class="ti-tit">Objetivo específico 2</span>
+<span class="ti-chip">✓ Cumplido</span>
+<span class="ti-txt">Despliegue web con Kubernetes <b>exitoso</b>, con métricas registradas bajo carga.</span>
+</div>
 
-- El **prototipo físico resultó estable, funcional y reproducible**: operó sin un solo fallo en las 21 ejecuciones, quedando listo para la orquestación.
+</div>
+```
 
-**Objetivo específico 2 — cumplido**
-
-- El **despliegue web con Kubernetes fue exitoso**, con las métricas registradas bajo carga, y el análisis **explicó qué limita el rendimiento**.
-
-
-<!-- ─── 23 · RECOMENDACIONES TÉCNICAS ─── -->
 
 ## Recomendaciones técnicas {data-menu-title="Recomendaciones · Técnicas"}
 
-- **Mejorar la red (lo más importante):** reemplazar los trabajadores por placas con conexión de red propia (Raspberry Pi 4 o superior) y usar un conmutador de red más rápido. Cambiar solo las placas no bastaría, porque la red seguiría limitada.
-- **Mantener los ventiladores:** no por el rendimiento web, sino para proteger los equipos —bajar 10 a 15 °C puede duplicar su vida útil— y dejar el clúster listo para tareas más exigentes.
-- **Almacenamiento:** preferir discos de estado sólido en lugar de tarjetas de memoria, para evitar su desgaste con el uso prolongado.
+```{=html}
+<div class="ti-grid ti-3 ti-numerada">
 
+<div class="ti-card ti-clave">
+<span class="fh-num">1</span>
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <path d="M40 22 H160 V96 H128 V112 H72 V96 H40 Z" fill="#ffffff" stroke="#ffffff" stroke-width="4" stroke-linejoin="round"/>
+  <g stroke="#E30613" stroke-width="6" stroke-linecap="round"><path d="M62 38 V62 M78 38 V62 M94 38 V62 M110 38 V62 M126 38 V62 M142 38 V62"/></g>
+</svg>
+<span class="ti-tit">Priorizar la red</span>
+<span class="ti-txt">Trabajadores con Ethernet dedicado (Raspberry Pi 4 o superior) <b>y</b> switch Gigabit.</span>
+</div>
 
-<!-- ─── 24 · RECOMENDACIONES FUTURAS ─── -->
+<div class="ti-card">
+<span class="fh-num">2</span>
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <g transform="translate(100 65)">
+    <rect x="-58" y="-58" width="116" height="116" rx="16" fill="none" stroke="#1B2A4A" stroke-width="6"/>
+    <circle r="46" fill="none" stroke="#1B2A4A" stroke-width="4"/>
+    <g class="fh-aspas ti-gira" fill="#E30613">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1.4s" repeatCount="indefinite"/>
+      <path d="M0 -6 C-16 -40 16 -44 8 -8 Z"/><path d="M0 -6 C-16 -40 16 -44 8 -8 Z" transform="rotate(120)"/><path d="M0 -6 C-16 -40 16 -44 8 -8 Z" transform="rotate(240)"/>
+    </g>
+    <circle r="8" fill="#1B2A4A"/>
+  </g>
+</svg>
+<span class="ti-tit">Mantener la refrigeración</span>
+<span class="ti-txt">Por la vida útil del hardware, no por el rendimiento web.</span>
+</div>
+
+<div class="ti-card">
+<span class="fh-num">3</span>
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <path d="M14 34 H46 L58 46 V98 H14 Z" fill="#C9CED6"/>
+  <path d="M10 28 L62 104" stroke="#1B2A4A" stroke-width="6" stroke-linecap="round"/>
+  <path d="M74 66 H98 M90 56 L100 66 L90 76" fill="none" stroke="#1B2A4A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="112" y="30" width="78" height="72" rx="10" fill="#E30613"/>
+  <text x="151" y="75" font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="24" fill="#fff" text-anchor="middle">SSD</text>
+</svg>
+<span class="ti-tit">Almacenamiento de estado sólido</span>
+<span class="ti-txt">En lugar de tarjetas microSD.</span>
+</div>
+
+</div>
+```
+
 
 ## Recomendaciones para trabajos futuros {data-menu-title="Recomendaciones · Futuras"}
 
-- **Repetir el estudio** con un clúster de placas iguales y red dedicada, para confirmar de forma directa que el límite está en la red.
-- **Probar otros tipos de carga** (bases de datos, inteligencia artificial, archivos grandes) para ver si el factor que limita cambia y si la temperatura pasa a importar.
-- **Hacer más pruebas y más largas**, para permitir un análisis estadístico y observar el desgaste a largo plazo.
-- **Uso educativo:** aprovechar el prototipo en materias de redes, sistemas distribuidos e infraestructura, por su bajo costo.
+```{=html}
+<div class="ti-grid ti-4">
+
+<div class="ti-card">
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <path d="M100 24 V106 M46 65 H154" stroke="#1B2A4A" stroke-width="5" stroke-linecap="round"/>
+  <g fill="#E30613"><rect x="16" y="10" width="60" height="42" rx="8"/><rect x="124" y="10" width="60" height="42" rx="8"/><rect x="16" y="78" width="60" height="42" rx="8"/><rect x="124" y="78" width="60" height="42" rx="8"/></g>
+  <g font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="20" fill="#fff" text-anchor="middle"><text x="46" y="38">4B</text><text x="154" y="38">4B</text><text x="46" y="106">4B</text><text x="154" y="106">4B</text></g>
+  <circle cx="100" cy="65" r="12" fill="#1B2A4A"/>
+</svg>
+<span class="ti-tit">Replicar</span>
+<span class="ti-txt">en un clúster homogéneo con red dedicada, para verificar de forma directa el cuello de botella.</span>
+</div>
+
+<div class="ti-card">
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <g stroke="#E30613" stroke-width="4" stroke-linecap="round"><path d="M22 36 V44 M34 36 V44 M46 36 V44 M22 86 V94 M34 86 V94 M46 86 V94 M6 56 H14 M6 74 H14 M54 56 H62 M54 74 H62"/></g>
+  <rect x="14" y="44" width="40" height="42" rx="6" fill="#E30613"/>
+  <g fill="none" stroke="#1B2A4A" stroke-width="5"><ellipse cx="102" cy="40" rx="24" ry="10"/><path d="M78 40 V90 C78 103 126 103 126 90 V40 M78 65 C78 78 126 78 126 65"/></g>
+  <path d="M146 28 H174 L190 44 V102 H146 Z" fill="none" stroke="#1B2A4A" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M156 62 H180 M156 76 H180 M156 90 H172" stroke="#9AA1AD" stroke-width="5" stroke-linecap="round"/>
+</svg>
+<span class="ti-tit">Ampliar los tipos de carga</span>
+<span class="ti-txt">CPU intensiva, bases de datos, archivos grandes.</span>
+</div>
+
+<div class="ti-card">
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <g fill="#E30613"><circle cx="28" cy="38" r="14"/><circle cx="64" cy="38" r="14"/><circle cx="100" cy="38" r="14"/></g>
+  <g fill="none" stroke="#E30613" stroke-width="4" stroke-dasharray="6 5"><circle cx="136" cy="38" r="13"/><circle cx="172" cy="38" r="13"/></g>
+  <rect x="14" y="80" width="62" height="20" rx="10" fill="#1B2A4A"/>
+  <rect x="76" y="80" width="110" height="20" rx="10" fill="none" stroke="#1B2A4A" stroke-width="4" stroke-dasharray="8 6"/>
+  <path d="M176 112 l12 -22" stroke="none"/>
+</svg>
+<span class="ti-tit">Más repeticiones y pruebas más largas</span>
+</div>
+
+<div class="ti-card">
+<svg class="ti-icono" viewBox="0 0 200 130" aria-hidden="true">
+  <path d="M100 18 L186 54 L100 90 L14 54 Z" fill="#1B2A4A"/>
+  <path d="M52 74 V100 C52 114 148 114 148 100 V74 L100 94 Z" fill="#E30613"/>
+  <path d="M186 54 V96" stroke="#1B2A4A" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="186" cy="102" r="8" fill="#E30613"/>
+</svg>
+<span class="ti-tit">Uso docente</span>
+<span class="ti-txt">del prototipo, por su bajo costo.</span>
+</div>
+
+</div>
+```
 
 
-<!-- ═══════════════ 23 · GRACIAS ═══════════════ -->
+<!-- ═══════════════ GRACIAS ═══════════════ -->
 
 ## {.portada-final data-state="portada" data-menu-title="Gracias" data-background-color="#E30613" data-background-gradient="linear-gradient(135deg, #E30613 0%, #B8050F 60%, #8B0000 100%)"}
 
+```{=html}
 <div class="cierre-contenido">
 <h2>Gracias por su atención.</h2>
 <p class="gracias-texto">Diego Oswaldo Márquez Paccha — Universidad Nacional de Loja</p>
+<div class="cierre-qr"><img src="assets/qrEvidencia.png" alt="Código QR de la página de resultados"><div><b>Resultados completos y modelo 3D</b><br>Escanea el código o visita <span class="cierre-url">domp55.github.io/presentacionTesis/evidencia</span><br>También servida desde este clúster: <span class="cierre-url">http://192.168.10.10:32090</span> (con su WiFi)</div></div>
 </div>
+```

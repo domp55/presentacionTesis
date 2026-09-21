@@ -1,0 +1,60 @@
+# Página de evidencia servida desde el clúster K3s.
+# NGINX lee el HTML de /opt/evidencia-web en el nodo maestro (hostPath),
+# por eso el pod se fija a ese nodo. Se publica por NodePort 32090:
+#   http://192.168.10.10:32090/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: evidencia-web
+  namespace: default
+  labels:
+    app: evidencia-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: evidencia-web
+  template:
+    metadata:
+      labels:
+        app: evidencia-web
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: master
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: sitio
+          mountPath: /usr/share/nginx/html
+          readOnly: true
+        resources:
+          limits:
+            cpu: "250m"
+            memory: "64Mi"
+          requests:
+            cpu: "50m"
+            memory: "16Mi"
+      volumes:
+      - name: sitio
+        hostPath:
+          path: /opt/evidencia-web
+          type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: evidencia-web
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    app: evidencia-web
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 32090
