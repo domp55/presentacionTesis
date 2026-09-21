@@ -1,0 +1,85 @@
+/* Base tipográfica propia (la página ya no carga Bootstrap, para pesar menos) */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0 auto; padding: 18px 16px 40px; max-width: 780px; background: #fff;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+h1, h2 { line-height: 1.2; }
+h1.title { margin: 0; }
+p.subtitle { margin: 4px 0 0; }
+p { margin: 0 0 0.9em; }
+ul { padding-left: 1.2em; margin: 0.6em 0 0.9em; }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; border-bottom: 1px solid #ECECEC; vertical-align: top; }
+img { max-width: 100%; height: auto; }
+
+/* Página de evidencia: pensada primero para el celular */
+:root {
+  --unl-rojo: #E30613;
+  --unl-rojo-oscuro: #B8050F;
+  --unl-azul-oscuro: #1B2A4A;
+  --unl-gris: #666666;
+  --unl-gris-claro: #F5F5F5;
+}
+body { color: #222; font-size: 17px; line-height: 1.55; }
+#title-block-header { border-left: 6px solid var(--unl-rojo); padding-left: 16px; margin-bottom: 1.2em; }
+#title-block-header .title { color: var(--unl-azul-oscuro); font-weight: 800; font-size: 1.7em; }
+#title-block-header .subtitle { color: var(--unl-gris); font-size: 1em; }
+h2 { color: var(--unl-azul-oscuro); font-weight: 800; border-bottom: 3px solid var(--unl-rojo); padding-bottom: 4px; margin-top: 1.8em; font-size: 1.3em; }
+a { color: var(--unl-rojo-oscuro); word-break: break-word; }
+nav#TOC { background: var(--unl-gris-claro); border-radius: 10px; padding: 12px 18px; margin-bottom: 1.2em; }
+
+.aviso-cluster { background: #EEF2F8; border-left: 5px solid var(--unl-azul-oscuro); border-radius: 0 10px 10px 0; padding: 12px 16px; margin-bottom: 1em; }
+.aviso-cluster p { margin: 0; }
+
+.cifras { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 1em 0; }
+.cifra { background: linear-gradient(135deg, var(--unl-rojo) 0%, var(--unl-rojo-oscuro) 100%); color: #fff; border-radius: 12px; padding: 14px 12px; text-align: center; }
+.cifra .c-valor { display: block; font-size: 1.7em; font-weight: 800; line-height: 1.1; }
+.cifra .c-rotulo { display: block; font-size: 0.78em; opacity: 0.95; margin-top: 4px; line-height: 1.3; }
+
+/* Tablas con desplazamiento horizontal en pantallas angostas */
+.tabla { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0.8em 0; border: 1px solid #E0E0E0; border-radius: 10px; }
+.tabla table { margin: 0; font-size: 0.86em; min-width: 520px; }
+.tabla thead th { background: var(--unl-azul-oscuro); color: #fff; white-space: nowrap; }
+.tabla td, .tabla th { padding: 7px 10px; }
+.tabla tbody tr:nth-child(even) { background: var(--unl-gris-claro); }
+
+figure { margin: 1.2em 0; }
+figure img { width: 100%; height: auto; border-radius: 8px; border: 1px solid #E0E0E0; }
+figcaption { font-size: 0.85em; color: var(--unl-gris); font-style: italic; text-align: center; }
+pre { font-size: 0.8em; border-radius: 8px; }
+.pie { margin-top: 2.5em; padding-top: 1em; border-top: 1px solid #E0E0E0; font-size: 0.82em; color: var(--unl-gris); text-align: center; }
+
+/* Visor 3D del prototipo */
+.visor-3d { display: block; width: 100%; height: 380px; background: radial-gradient(circle at 50% 40%, #ffffff 0%, #E9EDF3 100%); border: 1px solid #E0E0E0; border-radius: 12px; }
+@media (min-width: 700px) { .visor-3d { height: 480px; } }
+.visor-cargando { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--unl-gris); font-size: 0.95em; }
+.visor-ayuda { text-align: center; font-size: 0.85em; color: var(--unl-gris); margin: 6px 0 1em; }
+
+/* ── Versión compacta: secciones plegables ── */
+body { font-size: 16px; }
+#title-block-header { margin-bottom: 0.8em; }
+#title-block-header .title { font-size: 1.45em; }
+#title-block-header .subtitle { font-size: 0.9em; margin-top: 2px; }
+h2 { margin-top: 1.2em; font-size: 1.15em; }
+.cifras { grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 0.8em 0; }
+@media (min-width: 700px) { .cifras { grid-template-columns: repeat(4, 1fr); } }
+.cifra { padding: 10px 8px; }
+.cifra .c-valor { font-size: 1.45em; }
+.visor-3d { height: 330px; }
+details { border: 1px solid #E0E0E0; border-radius: 10px; margin: 8px 0; background: #fff; overflow: hidden; }
+details > summary {
+  cursor: pointer; list-style: none; padding: 12px 40px 12px 14px; position: relative;
+  font-weight: 700; color: var(--unl-azul-oscuro); background: var(--unl-gris-claro);
+}
+details > summary::-webkit-details-marker { display: none; }
+details > summary::after { content: "+"; position: absolute; right: 14px; top: 8px; font-size: 1.4em; color: var(--unl-rojo); font-weight: 800; }
+details[open] > summary::after { content: "–"; }
+details[open] > summary { border-bottom: 3px solid var(--unl-rojo); }
+details > *:not(summary) { margin-left: 14px; margin-right: 14px; }
+details > .tabla { margin-left: 8px; margin-right: 8px; }
+details figure { margin: 0.8em 14px; }
+.pie { margin-top: 1.6em; }
+
+/* Botón hacia la copia servida en vivo por el clúster (solo aparece si el túnel responde) */
+.boton-cluster { display: block; margin: 0 0 1em; padding: 12px 16px; border-radius: 10px; background: #2E7D32; color: #fff !important; font-weight: 700; text-align: center; text-decoration: none; box-shadow: 0 4px 12px rgba(46, 125, 50, 0.35); }
+.boton-cluster[hidden] { display: none; }
