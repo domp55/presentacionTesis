@@ -83,6 +83,86 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>El límite del rendimiento no es la temperatura ni el procesador, sino la <strong>red de los nodos trabajadores</strong>: en la Raspberry Pi 3, el Ethernet pasa por el bus USB.</p>
+<h2 class="oculto" id="en-vivo">El clúster en vivo</h2>
+<div id="monitor" class="oculto">
+  <div class="mv-tiles">
+    <div class="mv-tile mv-clave"><span class="mv-num" id="mv-personas">–</span><span class="mv-rot">personas con esta página abierta</span><span class="mv-sub" id="mv-pico"></span></div>
+    <div class="mv-tile"><span class="mv-num" id="mv-kbps">–</span><span class="mv-rot">tráfico que sale del clúster</span><span class="mv-sub">nodo maestro · eth0</span></div>
+    <div class="mv-tile"><span class="mv-num" id="mv-cpu">–</span><span class="mv-rot">uso de CPU del clúster</span><span class="mv-sub">promedio de los 4 nodos</span></div>
+  </div>
+
+  <div class="mv-graficas">
+    <div class="mv-graf"><span class="mv-gt">Personas</span><svg id="mv-g-personas" viewbox="0 0 300 60" preserveaspectratio="none"></svg></div>
+    <div class="mv-graf"><span class="mv-gt">Tráfico</span><svg id="mv-g-kbps" viewbox="0 0 300 60" preserveaspectratio="none"></svg></div>
+    <div class="mv-graf"><span class="mv-gt">CPU</span><svg id="mv-g-cpu" viewbox="0 0 300 60" preserveaspectratio="none"></svg></div>
+  </div>
+
+  <div class="mv-nodos" id="mv-nodos"></div>
+  <p class="mv-nota" id="mv-nota">Se actualiza cada 3 segundos. Cada celular o computador con esta página abierta cuenta como una persona. Fíjate en qué sube cuando entra más gente: el tráfico crece, el procesador casi no se mueve.</p>
+</div>
+<script>
+(function () {
+  var seccion = document.getElementById('en-vivo');
+  var h = location.hostname;
+  var enGithub = h === 'domp55.github.io';
+  var enLocal = h === 'localhost' || h === '127.0.0.1' || location.protocol === 'file:';
+  var forzada = new URLSearchParams(location.search).get('api');
+  var vid;
+  try { vid = localStorage.getItem('mv-id'); } catch (e) {}
+  if (!vid) {
+    vid = 'v' + Math.random().toString(36).slice(2, 12) + Date.now().toString(36);
+    try { localStorage.setItem('mv-id', vid); } catch (e) {}
+  }
+  function $(id) { return document.getElementById(id); }
+  function caudal(kbps) { return kbps >= 1000 ? (kbps / 1000).toFixed(1) + ' Mbps' : Math.round(kbps) + ' kbps'; }
+
+  function trazar(svg, valores, color) {
+    var max = Math.max.apply(null, valores.concat([1]));
+    var n = valores.length, pts = [];
+    for (var i = 0; i < n; i++) {
+      var x = n > 1 ? (i / (n - 1)) * 300 : 300;
+      pts.push(x.toFixed(1) + ',' + (56 - (valores[i] / max) * 50).toFixed(1));
+    }
+    svg.innerHTML = '<polygon points="0,58 ' + pts.join(' ') + ' 300,58" fill="' + color + '" opacity="0.15"></polygon>' +
+      '<polyline points="' + pts.join(' ') + '" fill="none" stroke="' + color + '" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"></polyline>';
+  }
+
+  function pintar(d) {
+    seccion.classList.remove('oculto');
+    $('monitor').classList.remove('oculto');
+    $('mv-personas').textContent = d.personas;
+    $('mv-pico').textContent = 'máximo: ' + d.pico + ' · visitas: ' + d.total;
+    $('mv-kbps').textContent = caudal(d.kbps);
+    $('mv-cpu').textContent = d.cpu.toFixed(1) + ' %';
+    var hist = d.historia || [];
+    trazar($('mv-g-personas'), hist.map(function (p) { return p[1]; }), '#E30613');
+    trazar($('mv-g-kbps'), hist.map(function (p) { return p[3]; }), '#1B2A4A');
+    trazar($('mv-g-cpu'), hist.map(function (p) { return p[2]; }), '#2E7D32');
+    $('mv-nodos').innerHTML = (d.nodos || []).map(function (n) {
+      if (!n.ok) return '<div class="mv-nodo"><b>' + n.nombre + '</b><span class="mv-sin">sin datos</span></div>';
+      return '<div class="mv-nodo"><b>' + n.nombre + '</b>' +
+        '<div class="mv-barra"><i style="width:' + Math.min(100, n.cpu) + '%"></i></div>' +
+        '<span>CPU ' + n.cpu.toFixed(0) + ' % · ' + (n.temp == null ? '–' : n.temp.toFixed(0) + ' °C') + ' · RAM ' + (n.mem == null ? '–' : n.mem.toFixed(0) + ' %') + '</span></div>';
+    }).join('');
+  }
+
+  function arrancar(base) {
+    function ciclo() {
+      fetch(base + 'api/estado?id=' + vid, { cache: 'no-store' })
+        .then(function (r) { return r.json(); }).then(pintar).catch(function () {});
+    }
+    ciclo();
+    setInterval(ciclo, 3000);
+  }
+
+  if (forzada) return arrancar(forzada);
+  if (!enGithub && !enLocal) return arrancar('');          // la sirve el clúster: misma dirección
+  if (enGithub) {                                           // copia en GitHub Pages: pregunta al clúster por su túnel
+    fetch('cluster.json?t=' + Date.now()).then(function (r) { return r.json(); })
+      .then(function (c) { if (c && c.url) arrancar(c.url); }).catch(function () {});
+  }
+})();
+</script>
 <h2 id="el-prototipo-en-3d">El prototipo en 3D</h2>
 <script type="module" src="lib/model-viewer.min.js"></script>
 <model-viewer class="visor-3d" src="modelo/cluster.glb" data-external="1" alt="Modelo 3D de la carcasa modular del clúster" camera-controls="" touch-action="pan-y" auto-rotate="" auto-rotate-delay="1500" rotation-per-second="18deg" camera-orbit="35deg 68deg auto" min-camera-orbit="auto 10deg auto" max-camera-orbit="auto 100deg auto" shadow-intensity="1" shadow-softness="0.9" exposure="1.15" interaction-prompt="auto">
