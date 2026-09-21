@@ -2406,22 +2406,23 @@ Ocupación del enlace <span>100 Mbps</span>
 
 <div class="vs-card">
 <span class="vs-tit">Latencia media</span>
-<span class="vs-fuente">Sidharta et al.</span>
-<div class="vs-fila"><span class="vs-rot">4 Raspberry Pi 4</span><div class="vs-barra"><i class="vs-otro" style="width:100%"></i></div><b class="vs-val">3120 ms</b></div>
-<div class="vs-fila"><span class="vs-rot">Aquí</span><div class="vs-barra"><i class="vs-aqui" style="width:14%"></i></div><b class="vs-val vs-rojo">437 ms</b></div>
+<span class="vs-fuente">Sidharta et al. · K3s + NGINX</span>
+<div class="vs-fila"><span class="vs-rot">4 Raspberry Pi 4 · red Gigabit</span><div class="vs-barra"><i class="vs-otro" style="width:100%"></i></div><b class="vs-val">3120 ms</b></div>
+<div class="vs-fila"><span class="vs-rot">Aquí · Raspberry Pi 3 · 100 Mbps</span><div class="vs-barra"><i class="vs-aqui" style="width:14%"></i></div><b class="vs-val vs-rojo">437 ms</b></div>
 </div>
 
 <div class="vs-card vs-clave">
 <span class="vs-tit">Costo y fiabilidad</span>
-<span class="vs-fuente">Shoop · Sankiti · Lakshminarayanan</span>
+<span class="vs-fuente">Portillo · Lakshminarayanan</span>
 <span class="vs-grande">464 USD</span>
-<span class="vs-rot vs-centro">dentro del rango de la literatura</span>
-<span class="vs-grande">0 fallos</span>
+<span class="vs-rot vs-centro">menos que el servidor comercial más económico (500–1500 USD)</span>
+<span class="vs-grande">0.00 % fallos</span>
+<span class="vs-rot vs-centro">en las 21 ejecuciones</span>
 </div>
 
 </div>
 <div class="caja-importante pegada">
-<p>El <em>thermal throttling</em> aparece con cargas <strong>intensivas en CPU</strong>; una carga web no lo es.</p>
+<p>Enfriar rinde en cargas <strong>intensivas en CPU</strong>, no en carga web. La <strong>red</strong> también limita a Raspberry Pi 4B y 5 (Gamess y Winston): es una restricción estructural, no un defecto de este prototipo.</p>
 </div>
 </section>
 <section id="discusión-qué-significa" class="slide level2" data-menu-title="Discusión · Implicaciones">
@@ -2437,7 +2438,7 @@ Ocupación del enlace <span>100 Mbps</span>
   <g fill="#E30613"><circle cx="84" cy="65" r="4"></circle><circle cx="100" cy="65" r="4"></circle><circle cx="116" cy="65" r="4"></circle></g>
   <g fill="#ffffff"><rect x="84" y="6" width="32" height="24" rx="5" /><rect x="84" y="100" width="32" height="24" rx="5" /><rect x="8" y="53" width="32" height="24" rx="5" /><rect x="160" y="53" width="32" height="24" rx="5" /></g>
 </svg>
-<span class="ti-txt">En cargas web, invertir primero en <b>red</b>, no en refrigeración.</span>
+<span class="ti-txt">En cargas web, invertir primero en <b>red</b>, no en refrigeración: la CPU no pasó del 28 %.</span>
 </div>
 
 <div class="ti-card">
@@ -2446,19 +2447,21 @@ Ocupación del enlace <span>100 Mbps</span>
   <g stroke="#E30613" stroke-width="4" stroke-linecap="round"><path d="M88 40 V48 M100 40 V48 M112 40 V48 M88 84 V92 M100 84 V92 M112 84 V92 M72 58 H80 M72 74 H80 M120 58 H128 M120 74 H128" /></g>
   <rect x="80" y="48" width="40" height="36" rx="6" fill="#E30613" />
 </svg>
-<span class="ti-txt">La refrigeración <b>protege el hardware</b> y habilita cargas intensivas en CPU.</span>
+<span class="ti-txt">La refrigeración <b>protege el hardware</b>: 74 → 35 °C. Entre 10 y 15 °C menos pueden duplicar su vida útil.</span>
 </div>
 
 <div class="ti-card">
 <svg class="ti-icono" viewbox="0 0 200 130" aria-hidden="true">
-  <g font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="26" fill="#1B2A4A">
-    <text x="18" y="38">1</text><text x="18" y="76">2</text><text x="18" y="114">3</text>
+  <path d="M20 44 L58 26 L96 44 L58 62 Z" fill="#E30613" />
+  <path d="M20 44 L58 62 V108 L20 90 Z" fill="#1B2A4A" />
+  <path d="M96 44 L58 62 V108 L96 90 Z" fill="#5B6068" />
+  <path d="M104 66 H126" stroke="#E30613" stroke-width="7" stroke-linecap="round" />
+  <path d="M120 56 L132 66 L120 76" fill="none" stroke="#E30613" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+  <g fill="none" stroke="#1B2A4A" stroke-width="5" stroke-linejoin="round" stroke-dasharray="9 7">
+    <path d="M142 44 L166 32 L190 44 L166 56 Z" /><path d="M142 44 V80 L166 92 L190 80 V44" /><path d="M166 56 V92" />
   </g>
-  <rect x="48" y="16" width="140" height="26" rx="8" fill="#E30613" />
-  <rect x="48" y="54" width="92" height="26" rx="8" fill="#9AA1AD" />
-  <rect x="48" y="92" width="58" height="26" rx="8" fill="#C9CED6" />
 </svg>
-<span class="ti-txt">Queda claro <b>qué mejorar primero</b> en un clúster de este tipo.</span>
+<span class="ti-txt">El sobrecosto de diseño <b>no se repite</b>: modelo 3D público, réplica por ≈ 50 USD de material.</span>
 </div>
 
 </div>
@@ -2473,7 +2476,7 @@ Ocupación del enlace <span>100 Mbps</span>
   <g font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="22" fill="#fff" text-anchor="middle"><text x="50" y="73">r1</text><text x="100" y="73">r2</text><text x="150" y="73">r3</text></g>
 </svg>
 <span class="ti-tit">3 repeticiones</span>
-<span class="ti-txt">Tendencias consistentes, sin inferencia estadística formal.</span>
+<span class="ti-txt">CV &lt; 0.6 %: tendencias consistentes, sin inferencia estadística formal.</span>
 </div>
 
 <div class="ti-card">
@@ -2484,7 +2487,7 @@ Ocupación del enlace <span>100 Mbps</span>
   <g stroke="#9AA1AD" stroke-width="7" stroke-linecap="round"><path d="M54 60 H146 M54 78 H146 M54 96 H112" /></g>
 </svg>
 <span class="ti-tit">Un solo tipo de carga</span>
-<span class="ti-txt">Contenido web estático.</span>
+<span class="ti-txt">Web estática: carga de referencia reproducible.</span>
 </div>
 
 <div class="ti-card">
@@ -2495,7 +2498,7 @@ Ocupación del enlace <span>100 Mbps</span>
   <g font-family="Montserrat, Segoe UI, sans-serif" font-weight="800" font-size="13" fill="#fff" text-anchor="middle"><text x="128" y="33">3B+</text><text x="172" y="71">3B</text><text x="128" y="109">3B</text></g>
 </svg>
 <span class="ti-tit">Clúster heterogéneo</span>
-<span class="ti-txt">Dificulta aislar cada variable.</span>
+<span class="ti-txt">Refleja la reutilización real de hardware; dificulta aislar cada variable.</span>
 </div>
 
 <div class="ti-card">
@@ -2517,7 +2520,7 @@ Ocupación del enlace <span>100 Mbps</span>
   <circle cx="100" cy="72" r="6" fill="#1B2A4A"></circle>
 </svg>
 <span class="ti-tit">Pruebas de 5 minutos</span>
-<span class="ti-txt">No miden la degradación prolongada.</span>
+<span class="ti-txt">Alcanzan el régimen estacionario; no miden la degradación prolongada.</span>
 </div>
 
 </div>
