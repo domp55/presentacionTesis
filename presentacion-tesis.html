@@ -709,6 +709,24 @@ border-radius: 8px !important; box-shadow: none !important; margin: 0;
 .reveal .portada-final .cierre-qr b { font-family: var(--unl-font-titulos); font-size: 1.15em; }
 .reveal .portada-final .cierre-qr .cierre-url { opacity: 0.95; }
 
+.reveal .slides .qr-demo { display: flex; align-items: center; justify-content: center; gap: 56px; margin-top: 18px; }
+.reveal .slides .qr-demo img {
+width: 470px; height: 470px; max-height: none; margin: 0; flex-shrink: 0; background: #fff; padding: 6px;
+border: 3px solid var(--unl-azul-oscuro); border-radius: 14px !important; box-shadow: none !important;
+image-rendering: pixelated;
+}
+.reveal .slides .qr-demo-txt { display: flex; flex-direction: column; gap: 26px; max-width: 540px; text-align: left; }
+.reveal .slides .qr-demo-paso { display: flex; align-items: center; gap: 18px; font-size: 0.86em; line-height: 1.3; color: var(--unl-azul-oscuro); }
+.reveal .slides .qr-demo-paso b {
+flex-shrink: 0; width: 46px; height: 46px; border-radius: 50%; background: var(--unl-rojo); color: #fff;
+font: 800 24px/46px var(--unl-font-titulos); text-align: center;
+}
+.reveal .slides .qr-demo-url {
+align-self: flex-start; margin-top: 6px; padding: 8px 14px; border-radius: 8px; font-size: 0.7em;
+background: var(--unl-gris-claro); border-left: 4px solid var(--unl-rojo); color: var(--unl-azul-oscuro);
+font-family: 'Consolas', 'Cascadia Mono', 'Courier New', monospace;
+}
+
 
 .reveal .slides .fig-ancha.terminal figure, .reveal .slides .fig-ancha.terminal .quarto-figure { display: block; width: 100%; }
 .reveal .slides .fig-ancha.terminal img { width: 100%; height: 265px; max-height: none; max-width: none; object-fit: cover; object-position: left top; }
@@ -2761,6 +2779,19 @@ percentil 95 bajo carga alta (437 ms de media)<br>(p95 de 3.6 y 3.8 ms en carga 
 </div>
 
 </div>
+<!-- ═══════════════ DEMOSTRACIÓN: QR GRANDE ═══════════════ -->
+</section>
+<section id="demostración-el-clúster-en-vivo" class="slide level2" data-menu-title="Demostración · QR">
+<h2>Demostración — El clúster en vivo</h2>
+<div class="qr-demo">
+<img role="img" aria-label="Código QR de la página de resultados servida por el clúster" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFYAAARWAQAAAAA5uwvLAAAE40lEQVR42u3dW26jQBAF0NKwAJbkrbMkL8ASk8xDge6qJslX1Jz+CjbYR/JXruoR+485r2BhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhOVieUZ2lfjd/dn17aTu/9Hh7qfyCP+++W37FzzksLCwsLCwsLCwsLCwsLCzfOIes4NHnEIec4fFxuf9LEppn61CiefZwnnIGFhYWFhYWFhYWFhYWFpZpc4bLcOAVfysWDpfFzXlGcUghFjkDCwsLCwsLCwsLCwsLC8sNc4a6RCEuc4YkdpAzsLCwsLCwsLCwsLCwsLDcOGfYy5ELSbVDxKkFQz0DCwsLCwsLCwsLCwsLC8tdc4Z8PsMhZxhfxmXOYD4DCwsLCwsLCwsLCwsLC8stcob8FDMWvnNZHDkDCwsLCwsLCwsLCwsLC8tcOcP4NFnB2t+xxVULxvWOTb8RCwsLCwsLCwsLCwsLC8scOUOSJGwfN63nRolizeWXbu6HOcgZWFhYWFhYWFhYWFhYWFgmyRnqf/+v6xnqAoZm6+UghZAzsLCwsLCwsLCwsLCwsLDMlTPs5SLL9VOrKpNWiOhKIw7fq56BhYWFhYWFhYWFhYWFhWXenGGLqrzhkDM053qvZRE7mM/AwsLCwsLCwsLCwsLCwjJ1ztBkBYczaHaIL1Q7vMbf6zdiYWFhYWFhYWFhYWFhYZknZ9j6YKFeP3F4Nokdtug2ZvbvHjMKOQMLCwsLCwsLCwsLCwsLyzw5w3jfRETaCtG/+xp+cjP5YVHPwMLCwsLCwsLCwsLCwsIyZc7wufkMdcVCk0I0z27nYGGTM7CwsLCwsLCwsLCwsLCwzJwzPPt3HsP1E9v5ch9urozyUs7AwsLCwsLCwsLCwsLCwjJnzvBIWyEGUyLH5Q39dxVjIe21ZGFhYWFhYWFhYWFhYWGZL2c4XO7lgolBZ0T+bLH18t+f5kCysLCwsLCwsLCwsLCwsMyXM4wrFpKTZwXJ+okk0HjkN/uNWFhYWFhYWFhYWFhYWFjmyBnGzQ51TcJyXj+xXM6QHHyy34iFhYWFhYWFhYWFhYWFZeqcIW92+H/Zb5QYP7v0xRPqGVhYWFhYWFhYWFhYWFhY5ssZ9nJnRHLWcwHDs08S8meXvKtCzsDCwsLCwsLCwsLCwsLCMl/OsPVJQl+xsNQzFiJtslgvh0bqm2BhYWFhYWFhYWFhYWFhmStnqGsSlq9MiUzGNTz772x6LuQMLCwsLCwsLCwsLCwsLCxz5Qzj00xvGA9kWPOhkf0CTTkDCwsLCwsLCwsLCwsLC8ucOcOzvGHJc4ZkPsM4Z4i050LfBAsLCwsLCwsLCwsLCwvLnDlD8u9/nHsfLmsS9mGjRPPuYt8ECwsLCwsLCwsLCwsLC8vUOUMTDsR5XEM9kGGLT5RGNJ8coW+ChYWFhYWFhYWFhYWFheV+OUNRwBDp0MjrwY/NzeoZWFhYWFhYWFhYWFhYWFhumjMUTRZbdCsy+1Aiwl5LFhYWFhYWFhYWFhYWFpYb5Qz5fIb9vGBiLdsoIq6mREZ04xrUM7CwsLCwsLCwsLCwsLCwzJcz5GfJqx2ijx1i2GTRF04s6hlYWFhYWFhYWFhYWFhYWKbMGX7AebGwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwvFt+A4eYeOMYvI+XAAAAAElFTkSuQmCC" alt="Código QR de la página de resultados servida por el clúster">
+<div class="qr-demo-txt">
+<span class="qr-demo-paso"><b>1</b><span>Escanee el código con sus datos móviles.</span></span>
+<span class="qr-demo-paso"><b>2</b><span>Pulse el botón verde: la página la sirve este clúster.</span></span>
+<span class="qr-demo-paso"><b>3</b><span>Observe cuántas personas hay conectadas y el uso de recursos.</span></span>
+<span class="qr-demo-url">cluster-tesis.tail846bd3.ts.net</span>
+</div>
+</div>
 <!-- ═══════════════ GRACIAS ═══════════════ -->
 </section>
 <section id="section-1" class="slide level2 portada-final" data-state="portada" data-menu-title="Gracias" data-background-color="#E30613" data-background-gradient="linear-gradient(135deg, #E30613 0%, #B8050F 60%, #8B0000 100%)">
@@ -2768,7 +2799,7 @@ percentil 95 bajo carga alta (437 ms de media)<br>(p95 de 3.6 y 3.8 ms en carga 
 <div class="cierre-contenido">
 <h2>Gracias por su atención.</h2>
 <p class="gracias-texto">Diego Oswaldo Márquez Paccha — Universidad Nacional de Loja</p>
-<div class="cierre-qr"><img role="img" aria-label="Código QR de la página de resultados" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbwAAAG8AQAAAACNyy1yAAACEklEQVR42u2cQW7DMAwEiX7A//+lfuAmtSzuMmgP7oE6jBEUbqK5CIv1ipQc57NrBCAgICDgb2Cs68j79f1rTPnpdX+Or3h4AQI+vN6aPKZy34L8+UwNX/8uGcswtArYpVVT4+XSI79ZGs5haBWwW6sWBkSrVdJoFbDdV0cUjzVrRauA2+TVKc71N0yr5FXAZq1qHeCPD3UAwG6t6nVp0ipa96Pfi13MKmBbXr2e+Gv5vzJA+eaOB8wqYIevLgW6r6ajjkg9s7YCbM0AK46WClWGgXGPx1cBe331FmQutbxmpQPIq4Cdayu3TW2z1kCLVgFbffWSYlYDVhgQs53304SZVcDmOkAW/CPbAaVvhVYBN8mr6aWHxFTtZ6FVwN6+lTSn0k5Xgo3AVwE3yQC63s90etbNV9SsAHt9tWxY9WWU1a/uwcwqYEdeFS81C9XNV94mQKuAnRkg3D9TlmKw5FXAPbSqy6jPvir7VwF3yAAWALSgepwWDHIbNrMK2KHVkTefRwJtqcV+AMD2DHD4et/bWBZo6bEC9tYByrkASap2QjDYDwDY6qthibSYrVYGpF/ArAL2ZIBy2Cpk21U+/U/OXANukFdlmZ9JtbztKuhbAW6k1eWoeswqpct5K8CttHrWF1vZdmvyKuAeeVU3WZmYD3tfEFoF3KQOMH+So9b60kt8FXCH+iovUgYEBAT8H/gNWgA1D/dvi4gAAAAASUVORK5CYII=" alt="Código QR de la página de resultados"><div><b>Resultados completos y modelo 3D</b><br>Escanea el código o visita <span class="cierre-url">domp55.github.io/presentacionTesis/evidencia</span><br>También servida desde este clúster: <span class="cierre-url">http://192.168.10.10:32090</span> (con su WiFi)</div></div>
+<div class="cierre-qr"><img role="img" aria-label="Código QR de la página de resultados" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFYAAARWAQAAAAA5uwvLAAAE40lEQVR42u3dW26jQBAF0NKwAJbkrbMkL8ASk8xDge6qJslX1Jz+CjbYR/JXruoR+485r2BhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhOVieUZ2lfjd/dn17aTu/9Hh7qfyCP+++W37FzzksLCwsLCwsLCwsLCwsLCzfOIes4NHnEIec4fFxuf9LEppn61CiefZwnnIGFhYWFhYWFhYWFhYWFpZpc4bLcOAVfysWDpfFzXlGcUghFjkDCwsLCwsLCwsLCwsLC8sNc4a6RCEuc4YkdpAzsLCwsLCwsLCwsLCwsLDcOGfYy5ELSbVDxKkFQz0DCwsLCwsLCwsLCwsLC8tdc4Z8PsMhZxhfxmXOYD4DCwsLCwsLCwsLCwsLC8stcob8FDMWvnNZHDkDCwsLCwsLCwsLCwsLC8tcOcP4NFnB2t+xxVULxvWOTb8RCwsLCwsLCwsLCwsLC8scOUOSJGwfN63nRolizeWXbu6HOcgZWFhYWFhYWFhYWFhYWFgmyRnqf/+v6xnqAoZm6+UghZAzsLCwsLCwsLCwsLCwsLDMlTPs5SLL9VOrKpNWiOhKIw7fq56BhYWFhYWFhYWFhYWFhWXenGGLqrzhkDM053qvZRE7mM/AwsLCwsLCwsLCwsLCwjJ1ztBkBYczaHaIL1Q7vMbf6zdiYWFhYWFhYWFhYWFhYZknZ9j6YKFeP3F4Nokdtug2ZvbvHjMKOQMLCwsLCwsLCwsLCwsLyzw5w3jfRETaCtG/+xp+cjP5YVHPwMLCwsLCwsLCwsLCwsIyZc7wufkMdcVCk0I0z27nYGGTM7CwsLCwsLCwsLCwsLCwzJwzPPt3HsP1E9v5ch9urozyUs7AwsLCwsLCwsLCwsLCwjJnzvBIWyEGUyLH5Q39dxVjIe21ZGFhYWFhYWFhYWFhYWGZL2c4XO7lgolBZ0T+bLH18t+f5kCysLCwsLCwsLCwsLCwsMyXM4wrFpKTZwXJ+okk0HjkN/uNWFhYWFhYWFhYWFhYWFjmyBnGzQ51TcJyXj+xXM6QHHyy34iFhYWFhYWFhYWFhYWFZeqcIW92+H/Zb5QYP7v0xRPqGVhYWFhYWFhYWFhYWFhY5ssZ9nJnRHLWcwHDs08S8meXvKtCzsDCwsLCwsLCwsLCwsLCMl/OsPVJQl+xsNQzFiJtslgvh0bqm2BhYWFhYWFhYWFhYWFhmStnqGsSlq9MiUzGNTz772x6LuQMLCwsLCwsLCwsLCwsLCxz5Qzj00xvGA9kWPOhkf0CTTkDCwsLCwsLCwsLCwsLC8ucOcOzvGHJc4ZkPsM4Z4i050LfBAsLCwsLCwsLCwsLCwvLnDlD8u9/nHsfLmsS9mGjRPPuYt8ECwsLCwsLCwsLCwsLC8vUOUMTDsR5XEM9kGGLT5RGNJ8coW+ChYWFhYWFhYWFhYWFheV+OUNRwBDp0MjrwY/NzeoZWFhYWFhYWFhYWFhYWFhumjMUTRZbdCsy+1Aiwl5LFhYWFhYWFhYWFhYWFpYb5Qz5fIb9vGBiLdsoIq6mREZ04xrUM7CwsLCwsLCwsLCwsLCwzJcz5GfJqx2ijx1i2GTRF04s6hlYWFhYWFhYWFhYWFhYWKbMGX7AebGwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwvFt+A4eYeOMYvI+XAAAAAElFTkSuQmCC" alt="Código QR de la página de resultados"><div><b>Resultados completos y modelo 3D</b><br>Escanea el código o visita <span class="cierre-url">domp55.github.io/presentacionTesis/evidencia</span><br>Servida desde este clúster: <span class="cierre-url">cluster-tesis.tail846bd3.ts.net</span></div></div>
 </div>
 
 </section>
