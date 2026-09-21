@@ -55,12 +55,16 @@ ul.task-list li input[type="checkbox"] {
   // En GitHub Pages: si el clúster responde por su túnel, se ofrece abrir la copia que sirve él.
   fetch('cluster.json?t=' + Date.now()).then(function (r) { return r.json(); }).then(function (c) {
     if (!c || !c.url) return;
-    var corte = new AbortController();
-    setTimeout(function () { corte.abort(); }, 7000);
-    return fetch(c.url + '?t=' + Date.now(), { mode: 'no-cors', cache: 'no-store', signal: corte.signal }).then(function () {
-      var b = document.getElementById('boton-cluster');
-      b.href = c.url; b.hidden = false;
-    });
+    function mostrar() { var b = document.getElementById('boton-cluster'); b.href = c.url; b.hidden = false; }
+    // Señal de vida: una imagen de 1 píxel servida por el clúster; si falla, segundo intento con fetch.
+    var sonda = new Image();
+    sonda.onload = mostrar;
+    sonda.onerror = function () {
+      var corte = new AbortController();
+      setTimeout(function () { corte.abort(); }, 8000);
+      fetch(c.url + '?t=' + Date.now(), { mode: 'no-cors', cache: 'no-store', signal: corte.signal }).then(mostrar).catch(function () {});
+    };
+    sonda.src = c.url + 'ping.gif?t=' + Date.now();
   }).catch(function () {});
 })();
 </script>
